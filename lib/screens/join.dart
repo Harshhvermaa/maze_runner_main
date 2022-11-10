@@ -61,7 +61,10 @@ class _JoinScreenState extends State<JoinScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Keyboard()),
+                      MaterialPageRoute(
+                          builder: (context) => Keyboard(
+                                nickname: "fgfgf",
+                              )),
                     );
                   },
                   child: const Text("Keyboard")),

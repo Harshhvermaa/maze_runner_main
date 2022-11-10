@@ -1,11 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_runner/screens/controller.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 class Keyboard extends StatefulWidget {
-  const Keyboard({super.key});
+  String nickname;
+  Keyboard({super.key, required this.nickname});
 
   @override
   State<Keyboard> createState() => _KeyboardState();
@@ -131,9 +134,34 @@ class _KeyboardState extends State<Keyboard> {
                                 });
                               } else if (e == "11") {
                                 //main code to navigator to the controller
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        MyController(_text.text)));
+                                var ref = FirebaseDatabase.instance.ref();
+
+                                ref.child(_text.text).once().then((value) {
+                                  if (value.snapshot.exists) {
+                                    print(value.snapshot);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MyController(_text.text)));
+                                  } else {
+                                    Fluttertoast.showToast(msg: "invalid code");
+                                  }
+                                });
+
+                                // ref.child(_text.text).onValue.listen(
+                                //   (event) {
+                                //     if (event.snapshot.exists) {
+                                //       print(event.snapshot);
+                                //       Navigator.of(context).push(
+                                //           MaterialPageRoute(
+                                //               builder: (context) =>
+                                //                   MyController(_text.text)));
+                                //     } else {
+                                //       Fluttertoast.showToast(
+                                //           msg: "invalid code");
+                                //     }
+                                //   },
+                                // );
                               }
                             },
                             child: numberContainer(

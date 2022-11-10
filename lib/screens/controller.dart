@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyController extends StatefulWidget {
   final String gameID;
@@ -20,9 +21,11 @@ class _MyControllerState extends State<MyController> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ref.child(widget.gameID).onValue.listen((event) {
-      if (event.snapshot.exists) {
-        int noOfNode = event.snapshot.children.length;
+
+    ref.child(widget.gameID).once().then((value) {
+      Fluttertoast.showToast(msg: "tetst");
+      if (value.snapshot.exists) {
+        int noOfNode = value.snapshot.children.length;
         if (noOfNode == 0) {
           player = "P1";
         } else if (noOfNode == 1) {
@@ -30,6 +33,17 @@ class _MyControllerState extends State<MyController> {
         }
       }
     });
+
+    // ref.child(widget.gameID).onValue.listen((event) {
+    //   if (event.snapshot.exists) {
+    //     int noOfNode = event.snapshot.children.length;
+    //     if (noOfNode == 0) {
+    //       player = "P1";
+    //     } else if (noOfNode == 1) {
+    //       player = "P2";
+    //     }
+    //   }
+    // });
     setDefaultValuesOfPlayer();
   }
 
@@ -37,7 +51,7 @@ class _MyControllerState extends State<MyController> {
   Widget build(BuildContext context) {
     Timer? timer2;
     JoystickMode joystickMode = JoystickMode.horizontalAndVertical;
-
+    Fluttertoast.showToast(msg: "controller build !!!!");
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -129,6 +143,6 @@ class _MyControllerState extends State<MyController> {
 
   void setDefaultValuesOfPlayer() async {
     await ref.child("${widget.gameID}/${player}").set({"x": "0", "y": "0"});
-    await ref.child("${widget.gameID}/a").remove();
+    // await ref.child("${widget.gameID}/a").remove();
   }
 }

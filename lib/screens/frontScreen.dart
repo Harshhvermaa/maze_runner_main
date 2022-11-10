@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maze_runner/screens/keyboard.dart';
 
 class FrontScreen extends StatefulWidget {
   const FrontScreen({super.key});
@@ -60,7 +61,14 @@ class _FrontScreenState extends State<FrontScreen> {
                   // borderRadius: BorderRadius.circular(20),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Keyboard(
+                                  nickname: _nickname.text,
+                                )));
+                  },
                   child: Text(
                     "Submit",
                     style: TextStyle(fontSize: 25),

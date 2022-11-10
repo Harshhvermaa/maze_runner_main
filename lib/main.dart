@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:maze_runner/firebase_options.dart';
+import 'package:maze_runner/screens/frontScreen.dart';
 import 'package:maze_runner/screens/join.dart';
 import 'package:maze_runner/screens/keyboard.dart';
 import 'package:maze_runner/screens/two_player_contoller.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Maze Generator',
       debugShowCheckedModeBanner: false,
-      home: kIsWeb ? WebFirstScreen() : Keyboard(),
+      home: kIsWeb ? WebFirstScreen() : FrontScreen(),
     );
   }
 }

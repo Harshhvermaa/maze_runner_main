@@ -47,6 +47,8 @@ dependencies:
   firebase_database: ^9.1.7
   firebase_core_platform_interface: 4.5.1
   socket_io_client: ^2.0.0
+  get: ^4.6.5
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:

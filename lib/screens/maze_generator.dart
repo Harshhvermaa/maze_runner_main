@@ -9,7 +9,8 @@ import '../constants.dart';
 import '../models/cell.dart';
 
 class MazeGenerator extends StatefulWidget {
-  const MazeGenerator({Key? key}) : super(key: key);
+  final String gameId;
+  const MazeGenerator(this.gameId);
 
   @override
   State<MazeGenerator> createState() => _MazeGeneratorState();
@@ -34,7 +35,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   @override
   void initState() {
     super.initState();
-    ref.child("x").onValue.listen((event) {
+    ref.child("${widget.gameId}/P1/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -49,7 +50,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
         }
       }
     });
-    ref.child("y").onValue.listen((event) {
+    ref.child("${widget.gameId}/P1/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -237,7 +238,10 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Single player mode"),
+                    const Text(
+                      "Single player mode",
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Container(
                       color: Colors.red,
                       height: height,
