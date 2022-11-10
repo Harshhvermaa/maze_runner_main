@@ -20,7 +20,7 @@ class WebFirstScreen extends StatefulWidget {
 class _WebFirstScreenState extends State<WebFirstScreen> {
   late int id;
   var ref = FirebaseDatabase.instance.ref();
-  int noOfPlayers = 1;
+  int noOfPlayers = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +28,7 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
 
     if (true) {
       id = 100000 + Random().nextInt(899999);
-      ref.child(id.toString()).set({"P1": "a"});
+      ref.child(id.toString()).set("");
       ref.child(id.toString()).onValue.listen((event) {
         if (event.snapshot.exists) {
           int noOfNodes = event.snapshot.children.length;
@@ -37,16 +37,16 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
           );
           print("no of nodes inside web first page = $noOfNodes");
           if (noOfPlayers < noOfNodes) {
-            if (noOfNodes == 2) {
+            if (noOfNodes == 1) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => MazeGenerator(id.toString())));
+            } else if (noOfNodes == 2) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TwoPlayerMaze(id.toString())));
             } else if (noOfNodes == 3) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const TwoPlayerMaze()));
-            } else if (noOfNodes == 4) {
-              Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const ThreePlayerMaze()));
-            } else if (noOfNodes == 5) {
+            } else if (noOfNodes == 4) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const FourPlayerMaze()));
             }

@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    // var screenHeight = MediaQuery.of(context).size.height;
+    // var screenWidth = MediaQuery.of(context).size.width;
+
+    return MaterialApp(
       title: 'Maze Generator',
       debugShowCheckedModeBanner: false,
       home: kIsWeb ? WebFirstScreen() : FrontScreen(),

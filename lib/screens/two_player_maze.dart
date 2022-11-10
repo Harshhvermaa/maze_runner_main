@@ -9,7 +9,8 @@ import '../constants.dart';
 import '../models/cell.dart';
 
 class TwoPlayerMaze extends StatefulWidget {
-  const TwoPlayerMaze({Key? key}) : super(key: key);
+  final String gameID;
+  const TwoPlayerMaze(this.gameID);
 
   @override
   State<TwoPlayerMaze> createState() => _TwoPlayerMazeState();
@@ -31,7 +32,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
   @override
   void initState() {
     super.initState();
-    ref.child("123/P1/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -46,7 +47,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
-    ref.child("123/P1/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -61,7 +62,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
-    ref.child("123/P2/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P2/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -76,7 +77,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
-    ref.child("123/P2/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P2/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -319,10 +320,10 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                 const Text(
-                      "Two player mode",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  const Text(
+                    "Two player mode",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   Container(
                     color: Colors.red,
                     height: height,

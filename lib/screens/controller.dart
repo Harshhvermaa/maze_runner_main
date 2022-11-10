@@ -16,42 +16,67 @@ class MyController extends StatefulWidget {
 
 class _MyControllerState extends State<MyController> {
   var ref = FirebaseDatabase.instance.ref();
-  late String player = "P1";
+  late String player = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    ref.child(widget.gameID).once().then((value) {
-      Fluttertoast.showToast(msg: "tetst");
-      if (value.snapshot.exists) {
-        int noOfNode = value.snapshot.children.length;
-        Fluttertoast.showToast(
-          msg: "nodes : $noOfNode",
-        );
-        if (noOfNode == 0) {
-          player = "P1";
-        } else if (noOfNode == 1) {
-          player = "P2";
-        } else if (noOfNode == 3) {
-          player = "P3";
-        } else if (noOfNode == 4) {
-          player = "P4";
-        }
-      }
-    });
-
-    // ref.child(widget.gameID).onValue.listen((event) {
-    //   if (event.snapshot.exists) {
-    //     int noOfNode = event.snapshot.children.length;
+    // ref.child(widget.gameID).listen().then((value) {
+    //   Fluttertoast.showToast(msg: "tetst");
+    //   if (value.snapshot.exists) {
+    //     int noOfNode = value.snapshot.children.length;
+    //     Fluttertoast.showToast(
+    //       msg: "nodes : $noOfNode",
+    //     );
     //     if (noOfNode == 0) {
     //       player = "P1";
     //     } else if (noOfNode == 1) {
     //       player = "P2";
+    //     } else if (noOfNode == 2) {
+    //       player = "P3";
+    //     } else if (noOfNode == 3) {
+    //       player = "P4";
     //     }
     //   }
     // });
-    setDefaultValuesOfPlayer();
+
+    ref.child(widget.gameID).once().then((value) {
+      if (value.snapshot.exists) {
+        // int noOfNode = value.snapshot.children.length;
+        // if (noOfNode == 1) {
+        //   Fluttertoast.showToast(
+        //       msg: "Player 1 added !!!!!!!!!!!!!!!!!!!!!!!!");
+        //   player = "P1";
+        // } else if (noOfNode == 2) {
+        //   Fluttertoast.showToast(
+        //       msg: "Player 2 added !!!!!!!!!!!!!!!!!!!!!!!!");
+        //   player = "P2";
+        // }
+
+        if (value.snapshot.value == "") {
+          Fluttertoast.showToast(
+              msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
+          player = "P1";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P1").exists) {
+          Fluttertoast.showToast(
+              msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
+          Fluttertoast.showToast(
+              msg: "Player 2 added !!!!!!!!!!!!!!!!!!!!!!!!");
+          player = "P2";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P2").exists) {
+          player = "P3";
+        } else if (value.snapshot.child("P3").exists) {
+          player = "P4";
+        }
+      }
+      Fluttertoast.showToast(
+          msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
+    });
+    // setDefaultValuesOfPlayer();
+    // Fluttertoast.showToast(msg: "Player $player");
   }
 
   @override
@@ -150,6 +175,7 @@ class _MyControllerState extends State<MyController> {
 
   void setDefaultValuesOfPlayer() async {
     await ref.child("${widget.gameID}/$player").set({"x": "0", "y": "0"});
+    Fluttertoast.showToast(msg: "set defalut value");
     // await ref.child("${widget.gameID}/a").remove();
   }
 }
