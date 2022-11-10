@@ -1,10 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/four_player_maze.dart';
 
 import 'dart:math';
 
 import 'package:maze_runner/screens/maze_generator.dart';
+import 'package:maze_runner/screens/three_player_maze.dart';
 import 'package:maze_runner/screens/two_player_maze.dart';
 
 class WebFirstScreen extends StatefulWidget {
@@ -25,18 +28,27 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
 
     if (true) {
       id = 100000 + Random().nextInt(899999);
-      ref.child(id.toString()).set({"a": "a"});
+      ref.child(id.toString()).set({"P1": "a"});
       ref.child(id.toString()).onValue.listen((event) {
         if (event.snapshot.exists) {
           int noOfNodes = event.snapshot.children.length;
+          Fluttertoast.showToast(
+            msg: "nodes : $noOfNodes",
+          );
           print("no of nodes inside web first page = $noOfNodes");
           if (noOfPlayers < noOfNodes) {
             if (noOfNodes == 2) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => MazeGenerator(id.toString())));
             } else if (noOfNodes == 3) {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => TwoPlayerMaze()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const TwoPlayerMaze()));
+            } else if (noOfNodes == 4) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ThreePlayerMaze()));
+            } else if (noOfNodes == 5) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const FourPlayerMaze()));
             }
             noOfPlayers++;
           }

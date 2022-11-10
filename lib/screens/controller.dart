@@ -26,10 +26,17 @@ class _MyControllerState extends State<MyController> {
       Fluttertoast.showToast(msg: "tetst");
       if (value.snapshot.exists) {
         int noOfNode = value.snapshot.children.length;
+        Fluttertoast.showToast(
+          msg: "nodes : $noOfNode",
+        );
         if (noOfNode == 0) {
           player = "P1";
         } else if (noOfNode == 1) {
           player = "P2";
+        } else if (noOfNode == 3) {
+          player = "P3";
+        } else if (noOfNode == 4) {
+          player = "P4";
         }
       }
     });
@@ -134,15 +141,15 @@ class _MyControllerState extends State<MyController> {
   }
 
   void setValueXOfPlayer(double x1) async {
-    await ref.child("${widget.gameID}/${player}").update({"x": x1.toString()});
+    await ref.child("${widget.gameID}/$player").update({"x": x1.toString()});
   }
 
   void setValueYOfPlayer(double y1) async {
-    await ref.child("${widget.gameID}/${player}").update({"y": y1.toString()});
+    await ref.child("${widget.gameID}/$player").update({"y": y1.toString()});
   }
 
   void setDefaultValuesOfPlayer() async {
-    await ref.child("${widget.gameID}/${player}").set({"x": "0", "y": "0"});
+    await ref.child("${widget.gameID}/$player").set({"x": "0", "y": "0"});
     // await ref.child("${widget.gameID}/a").remove();
   }
 }

@@ -8,20 +8,22 @@ import 'package:flutter/services.dart';
 import '../constants.dart';
 import '../models/cell.dart';
 
-class TwoPlayerMaze extends StatefulWidget {
-  const TwoPlayerMaze({Key? key}) : super(key: key);
+class FourPlayerMaze extends StatefulWidget {
+  const FourPlayerMaze({Key? key}) : super(key: key);
 
   @override
-  State<TwoPlayerMaze> createState() => _TwoPlayerMazeState();
+  State<FourPlayerMaze> createState() => _FourPlayerMazeState();
 }
 
-class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
+class _FourPlayerMazeState extends State<FourPlayerMaze> {
   var ref = FirebaseDatabase.instance.ref();
 
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStepOfPlayer1;
   late int _currentStepOfPlayer2;
+  late int _currentStepOfPlayer3;
+  late int _currentStepOfPlayer4;
   final row = height ~/ spacing;
   final cols = width ~/ spacing;
   final List<Cell> stack = [];
@@ -91,6 +93,66 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
+    ref.child("123/P3/x").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves left
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('left');
+        }
+
+        //if joystick moves right
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('right');
+        }
+      }
+    });
+    ref.child("123/P3/y").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves up
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('up');
+        }
+
+        // if joystick moves down
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('down');
+        }
+      }
+    });
+    ref.child("123/P4/x").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves left
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('left');
+        }
+
+        //if joystick moves right
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('right');
+        }
+      }
+    });
+    ref.child("123/P4/y").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves up
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('up');
+        }
+
+        // if joystick moves down
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('down');
+        }
+      }
+    });
     reset();
   }
 
@@ -138,9 +200,11 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
     cells = getCells();
     _currentStepOfPlayer1 = 0;
     _currentStepOfPlayer2 = 0;
+    _currentStepOfPlayer3 = 0;
 
     cells[_currentStepOfPlayer1].visited = true;
     cells[_currentStepOfPlayer2].visited = true;
+    cells[_currentStepOfPlayer3].visited = true;
     _timer = Timer.periodic(const Duration(milliseconds: 100), updateCell);
   }
 
@@ -248,7 +312,67 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
             cells[_currentStepOfPlayer2].j + 1)!;
       }
     });
-    if (_currentStepOfPlayer1 == getIndex(0, row - 1)) {
+    if (_currentStepOfPlayer2 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
+  void _handleKeyEventOfPlayer3(RawKeyEvent event) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
+          !cells[_currentStepOfPlayer3].top) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i - 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
+          !cells[_currentStepOfPlayer3].bottom) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i + 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
+          !cells[_currentStepOfPlayer3].left) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j - 1)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
+          !cells[_currentStepOfPlayer3].right) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
+  void _handleKeyEventOfPlayer4(RawKeyEvent event) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
+          !cells[_currentStepOfPlayer4].top) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i - 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
+          !cells[_currentStepOfPlayer4].bottom) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i + 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
+          !cells[_currentStepOfPlayer4].left) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j - 1)!;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
+          !cells[_currentStepOfPlayer4].right) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer4 == getIndex(0, row - 1)) {
       setState(() {
         _isWin = true;
       });
@@ -307,6 +431,58 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
     }
   }
 
+  void _onScreenKeyEventOfPlayer3(String key) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (key == 'up' && !cells[_currentStepOfPlayer3].top) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i - 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (key == 'down' && !cells[_currentStepOfPlayer3].bottom) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i + 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (key == 'left' && !cells[_currentStepOfPlayer3].left) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j - 1)!;
+      } else if (key == 'right' && !cells[_currentStepOfPlayer3].right) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
+  void _onScreenKeyEventOfPlayer4(String key) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (key == 'up' && !cells[_currentStepOfPlayer4].top) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i - 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (key == 'down' && !cells[_currentStepOfPlayer4].bottom) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i + 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (key == 'left' && !cells[_currentStepOfPlayer4].left) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j - 1)!;
+      } else if (key == 'right' && !cells[_currentStepOfPlayer4].right) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -319,10 +495,10 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                 const Text(
-                      "Two player mode",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  const Text(
+                    "Four player mode",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   Container(
                     color: Colors.red,
                     height: height,
@@ -362,7 +538,13 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                                     : (index == _currentStepOfPlayer2 &&
                                             _isCompleted)
                                         ? Colors.orange
-                                        : Colors.transparent,
+                                        : (index == _currentStepOfPlayer3 &&
+                                                _isCompleted)
+                                            ? Colors.green
+                                            : (index == _currentStepOfPlayer4 &&
+                                                    _isCompleted)
+                                                ? Colors.pink
+                                                : Colors.transparent,
                                 // : cells[index].visited
                                 //     ? Colors.purple.withOpacity(0.5)
                                 // : Colors.transparent,
