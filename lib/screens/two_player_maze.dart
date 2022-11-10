@@ -319,6 +319,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Text("Two player mode"),
                   Container(
                     color: Colors.red,
                     height: height,

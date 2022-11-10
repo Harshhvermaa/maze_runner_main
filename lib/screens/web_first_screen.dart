@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:math';
 
+import 'package:maze_runner/screens/maze_generator.dart';
+import 'package:maze_runner/screens/two_player_maze.dart';
+
 class WebFirstScreen extends StatefulWidget {
   const WebFirstScreen({super.key});
 
@@ -25,6 +28,14 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
       if (event.snapshot.exists) {
         int noOfNodes = event.snapshot.children.length;
         print("no of nodes inside web first page = $noOfNodes");
+        if (noOfNodes == 1) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => MazeGenerator()));
+        }
+        else if (noOfNodes == 2) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => TwoPlayerMaze()));
+        }
       }
     });
   }

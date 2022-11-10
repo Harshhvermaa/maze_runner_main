@@ -237,6 +237,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const Text("Single player mode"),
                     Container(
                       color: Colors.red,
                       height: height,
