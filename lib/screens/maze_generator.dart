@@ -22,7 +22,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   // JoystickMode _joystickMode = JoystickMode.horizontalAndVertical;
 
   // Timer? _timer2;
-
+  String playerName = "";
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStep;
@@ -66,6 +66,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
       }
     });
     reset();
+    getPlayerName();
   }
 
   List<Cell> getCells() {
@@ -247,6 +248,13 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                     "Single player mode",
                     style: TextStyle(color: Colors.white),
                   ),
+                  Row(children: [
+                    Container(height: 30, width: 30, color: Colors.blue),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    const Text(""),
+                  ]),
                   Container(
                     color: Colors.red,
                     height: height,
@@ -348,5 +356,18 @@ class _MazeGeneratorState extends State<MazeGenerator> {
             )),
           ),
         ));
+  }
+
+  void getPlayerName() async {
+    ref.child("winner").once().then((value) => {
+          if (value.snapshot.exists)
+            {playerName = value.snapshot.value as String}
+        });
+
+    ref.child("${widget.gameId}/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName = value.snapshot.value as String;
+      }
+    });
   }
 }

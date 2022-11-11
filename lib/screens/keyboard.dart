@@ -15,7 +15,7 @@ class Keyboard extends StatefulWidget {
 }
 
 class _KeyboardState extends State<Keyboard> {
-  TextEditingController _text = TextEditingController();
+  final TextEditingController _text = TextEditingController();
 
   @override
   void initState() {
@@ -35,19 +35,20 @@ class _KeyboardState extends State<Keyboard> {
     // List<String> = []
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 42, 42, 42),
+      backgroundColor: const Color.fromARGB(255, 42, 42, 42),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(widget.nickname),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 24),
               child: Container(
                 height: 70,
                 width: screenWidth,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 0, 0, 0),
+                    color: const Color.fromARGB(255, 0, 0, 0),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       width: 2,
@@ -58,23 +59,24 @@ class _KeyboardState extends State<Keyboard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
+                      const Image(
                         image: AssetImage("assets/l.png"),
                         height: 30,
                         width: 30,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
                         child: TextField(
-                          showCursor: _text.text.length == 0 ? true : false,
+                          showCursor: _text.text.isEmpty ? true : false,
                           keyboardType: TextInputType.none,
                           maxLength: 6,
                           controller: _text,
                           cursorHeight: 40,
-                          style: TextStyle(fontSize: 40, color: Colors.white),
-                          decoration: InputDecoration(
+                          style: const TextStyle(
+                              fontSize: 40, color: Colors.white),
+                          decoration: const InputDecoration(
                               contentPadding: EdgeInsets.only(top: 17),
                               border: InputBorder.none),
                         ),
@@ -84,10 +86,10 @@ class _KeyboardState extends State<Keyboard> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
-            Container(
+            SizedBox(
                 // height: 550,
                 width: screenWidth,
                 child: StaggeredGrid.count(
@@ -123,7 +125,7 @@ class _KeyboardState extends State<Keyboard> {
                                   });
                                 } else if (e == "10") {
                                   setState(() {
-                                    _text.text = _text.text + "0";
+                                    _text.text = "${_text.text}0";
                                   });
                                 }
                               }
@@ -141,8 +143,9 @@ class _KeyboardState extends State<Keyboard> {
                                     print(value.snapshot);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                MyController(_text.text)));
+                                            builder: (context) => MyController(
+                                                gameID: _text.text,
+                                                nickName: widget.nickname)));
                                   } else {
                                     Fluttertoast.showToast(msg: "invalid code");
                                   }
@@ -184,10 +187,10 @@ class _KeyboardState extends State<Keyboard> {
         width: 80,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color.fromARGB(255, 31, 31, 31),
+            color: const Color.fromARGB(255, 31, 31, 31),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
                 color: Colors.blueAccent.withOpacity(0.5),
                 blurRadius: 8.0,
               ),
@@ -196,13 +199,13 @@ class _KeyboardState extends State<Keyboard> {
           child: index < 9
               ? Text(
                   "${index + 1}".toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       // fontWeight: FontWeight.w600,
                       fontSize: 30,
                       color: Colors.white),
                 )
               : index == 11
-                  ? Image(
+                  ? const Image(
                       image: AssetImage("assets/check.png"),
                       color: Colors.greenAccent,
                       height: 30,
@@ -211,12 +214,12 @@ class _KeyboardState extends State<Keyboard> {
                   : index == 10
                       ? Text(
                           "0".toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               // fontWeight: FontWeight.w600,
                               fontSize: 30,
                               color: Colors.white),
                         )
-                      : Image(
+                      : const Image(
                           image: AssetImage("assets/close.png"),
                           color: Colors.redAccent,
                           height: 30,

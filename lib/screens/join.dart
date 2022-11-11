@@ -25,7 +25,7 @@ class _JoinScreenState extends State<JoinScreen> {
                 controller: name_controller,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  label: const Text("Enter P1 or P2"),
+                  label: const Text(""),
                   labelStyle: const TextStyle(color: Colors.white),
                   fillColor: Colors.white,
                   focusedBorder: OutlineInputBorder(

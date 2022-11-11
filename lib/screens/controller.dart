@@ -7,7 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class MyController extends StatefulWidget {
   final String gameID;
-  const MyController(this.gameID);
+  final String nickName;
+  const MyController({required this.gameID, required this.nickName});
 
   @override
   State<MyController> createState() => _MyControllerState();
@@ -192,8 +193,11 @@ class _MyControllerState extends State<MyController> {
   }
 
   void setDefaultValuesOfPlayer() async {
-    await ref.child("${widget.gameID}/$player").set({"x": "0", "y": "0"});
+    await ref
+        .child("${widget.gameID}/$player")
+        .set({"name": widget.nickName, "x": "0", "y": "0"});
     Fluttertoast.showToast(msg: "set defalut value");
     // await ref.child("${widget.gameID}/a").remove();
+    
   }
 }
