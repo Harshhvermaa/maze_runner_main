@@ -45,10 +45,10 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
                   builder: (context) => TwoPlayerMaze(id.toString())));
             } else if (noOfNodes == 3) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ThreePlayerMaze()));
+                  builder: (context) => ThreePlayerMaze(id.toString())));
             } else if (noOfNodes == 4) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const FourPlayerMaze()));
+                  builder: (context) => FourPlayerMaze(id.toString())));
             }
             noOfPlayers++;
           }

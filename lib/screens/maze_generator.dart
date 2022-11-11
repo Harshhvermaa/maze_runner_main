@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
@@ -166,36 +166,6 @@ class _MazeGeneratorState extends State<MazeGenerator> {
     }
   }
 
-  void _handleKeyEvent(RawKeyEvent event) {
-    if (!_isCompleted || _isWin) {
-      return;
-    }
-    setState(() {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
-          !cells[_currentStep].top) {
-        _currentStep =
-            getIndex(cells[_currentStep].i - 1, cells[_currentStep].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
-          !cells[_currentStep].bottom) {
-        _currentStep =
-            getIndex(cells[_currentStep].i + 1, cells[_currentStep].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
-          !cells[_currentStep].left) {
-        _currentStep =
-            getIndex(cells[_currentStep].i, cells[_currentStep].j - 1)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
-          !cells[_currentStep].right) {
-        _currentStep =
-            getIndex(cells[_currentStep].i, cells[_currentStep].j + 1)!;
-      }
-    });
-    if (_currentStep == getIndex(0, row - 1)) {
-      setState(() {
-        _isWin = true;
-      });
-    }
-  }
-
   void _onScreenKeyEvent(String key) {
     if (!_isCompleted || _isWin) {
       return;
@@ -225,124 +195,157 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Maze runner",
+            style: GoogleFonts.josefinSans(fontSize: 30),
+          ),
+          backgroundColor: Colors.black,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 72, 80, 74),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        "assets/l.png",
+                        width: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        widget.gameId,
+                        style: GoogleFonts.josefinSans(fontSize: 30),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
         backgroundColor: Colors.black,
-        body: RawKeyboardListener(
-          autofocus: true,
-          focusNode: FocusNode(),
-          onKey: _handleKeyEvent,
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Center(
-                  child: FittedBox(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Single player mode",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Container(
-                      color: Colors.red,
-                      height: height,
-                      width: width,
-                      child: Stack(
-                        children: List.generate(
-                          cells.length,
-                          (index) => Positioned(
-                            top: cells[index].x,
-                            left: cells[index].y,
-                            child: Container(
-                                height: spacing,
-                                width: spacing,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    right: cells[index].right
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
-                                        : BorderSide.none,
-                                    bottom: cells[index].bottom
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
-                                        : BorderSide.none,
-                                    left: cells[index].left
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
-                                        : BorderSide.none,
-                                    top: cells[index].top
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
-                                        : BorderSide.none,
-                                  ),
-                                  // image: DecorationImage(image: AssetImage("assets/runner.png")),
-                                  color: index == _currentStep && _isCompleted
-                                      ? Colors.blue.withOpacity(0.7)
-                                      // : cells[index].visited
-                                      //     ? Colors.purple.withOpacity(0.5)
-                                      : Colors.transparent,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Center(
+                child: FittedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Single player mode",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Container(
+                    color: Colors.red,
+                    height: height,
+                    width: width,
+                    child: Stack(
+                      children: List.generate(
+                        cells.length,
+                        (index) => Positioned(
+                          top: cells[index].x,
+                          left: cells[index].y,
+                          child: Container(
+                              height: spacing,
+                              width: spacing,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: cells[index].right
+                                      ? const BorderSide(
+                                          color: Colors.white, width: 1)
+                                      : BorderSide.none,
+                                  bottom: cells[index].bottom
+                                      ? const BorderSide(
+                                          color: Colors.white, width: 1)
+                                      : BorderSide.none,
+                                  left: cells[index].left
+                                      ? const BorderSide(
+                                          color: Colors.white, width: 1)
+                                      : BorderSide.none,
+                                  top: cells[index].top
+                                      ? const BorderSide(
+                                          color: Colors.white, width: 1)
+                                      : BorderSide.none,
                                 ),
-                                padding: const EdgeInsets.all(2),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: index == 0
-                                      ? const Text(
-                                          'Start',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        )
-                                      : index == getIndex(0, row - 1)
-                                          ? const Text(
-                                              'End',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18),
-                                            )
-                                          : null,
-                                )),
-                          ),
+                                // image: DecorationImage(image: AssetImage("assets/runner.png")),
+                                color: index == _currentStep && _isCompleted
+                                    ? Colors.blue.withOpacity(0.7)
+                                    // : cells[index].visited
+                                    //     ? Colors.purple.withOpacity(0.5)
+                                    : Colors.transparent,
+                              ),
+                              padding: const EdgeInsets.all(2),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: index == 0
+                                    ? const Text(
+                                        'Start',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      )
+                                    : index == getIndex(0, row - 1)
+                                        ? const Text(
+                                            'End',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          )
+                                        : null,
+                              )),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      _isWin
-                          ? 'You Win !!'
-                          : _isCompleted
-                              ? 'Maze Generation Completed'
-                              : 'Generating Maze...',
-                      style: const TextStyle(color: Colors.white, fontSize: 22),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
                     _isWin
-                        ? MaterialButton(
-                            elevation: 0,
-                            color: Colors.white,
-                            onPressed: () {
-                              setState(() {
-                                reset();
-                              });
-                            },
-                            child: const Text(
-                              'Generate Another Maze',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          )
+                        ? 'You Win !!'
                         : _isCompleted
-                            ? const Text(
-                                'Press arrow keys to play.',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            : const SizedBox(),
-                  ],
-                ),
-              )),
-            ),
+                            ? 'Maze Generation Completed'
+                            : 'Generating Maze...',
+                    style: const TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  _isWin
+                      ? MaterialButton(
+                          elevation: 0,
+                          color: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              reset();
+                            });
+                          },
+                          child: const Text(
+                            'Generate Another Maze',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                        )
+                      : _isCompleted
+                          ? const Text(
+                              'Press arrow keys to play.',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          : const SizedBox(),
+                ],
+              ),
+            )),
           ),
         ));
   }

@@ -8,21 +8,24 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 import '../models/cell.dart';
 
-class TwoPlayerMaze extends StatefulWidget {
+class FivePlayerMaze extends StatefulWidget {
   final String gameID;
-  const TwoPlayerMaze(this.gameID);
+  const FivePlayerMaze(this.gameID);
 
   @override
-  State<TwoPlayerMaze> createState() => _TwoPlayerMazeState();
+  State<FivePlayerMaze> createState() => _FivePlayerMazeState();
 }
 
-class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
+class _FivePlayerMazeState extends State<FivePlayerMaze> {
   var ref = FirebaseDatabase.instance.ref();
 
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStepOfPlayer1;
   late int _currentStepOfPlayer2;
+  late int _currentStepOfPlayer3;
+  late int _currentStepOfPlayer4;
+  late int _currentStepOfPlayer5;
   final row = height ~/ spacing;
   final cols = width ~/ spacing;
   final List<Cell> stack = [];
@@ -92,6 +95,96 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
+    ref.child("${widget.gameID}/P3/x").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves left
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('left');
+        }
+
+        //if joystick moves right
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('right');
+        }
+      }
+    });
+    ref.child("${widget.gameID}/P3/y").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves up
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('up');
+        }
+
+        // if joystick moves down
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('down');
+        }
+      }
+    });
+    ref.child("${widget.gameID}/P4/x").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves left
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('left');
+        }
+
+        //if joystick moves right
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('right');
+        }
+      }
+    });
+    ref.child("${widget.gameID}/P4/y").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves up
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('up');
+        }
+
+        // if joystick moves down
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('down');
+        }
+      }
+    });
+    ref.child("${widget.gameID}/P5/x").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves left
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('left');
+        }
+
+        //if joystick moves right
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('right');
+        }
+      }
+    });
+    ref.child("${widget.gameID}/P5/y").onValue.listen((event) {
+      if (event.snapshot.exists) {
+        var value = event.snapshot.value.toString();
+
+        // if joystick moves up
+        if (double.parse(value) < 0) {
+          _onScreenKeyEventOfPlayer2('up');
+        }
+
+        // if joystick moves down
+        if (double.parse(value) > 0) {
+          _onScreenKeyEventOfPlayer2('down');
+        }
+      }
+    });
     reset();
   }
 
@@ -139,9 +232,15 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
     cells = getCells();
     _currentStepOfPlayer1 = 0;
     _currentStepOfPlayer2 = 0;
+    _currentStepOfPlayer3 = 0;
+    _currentStepOfPlayer4 = 0;
+    _currentStepOfPlayer5 = 0;
 
     cells[_currentStepOfPlayer1].visited = true;
     cells[_currentStepOfPlayer2].visited = true;
+    cells[_currentStepOfPlayer3].visited = true;
+    cells[_currentStepOfPlayer4].visited = true;
+    cells[_currentStepOfPlayer5].visited = true;
     _timer = Timer.periodic(const Duration(milliseconds: 100), updateCell);
   }
 
@@ -248,6 +347,84 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
     }
   }
 
+  void _onScreenKeyEventOfPlayer3(String key) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (key == 'up' && !cells[_currentStepOfPlayer3].top) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i - 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (key == 'down' && !cells[_currentStepOfPlayer3].bottom) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i + 1,
+            cells[_currentStepOfPlayer3].j)!;
+      } else if (key == 'left' && !cells[_currentStepOfPlayer3].left) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j - 1)!;
+      } else if (key == 'right' && !cells[_currentStepOfPlayer3].right) {
+        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
+            cells[_currentStepOfPlayer3].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
+  void _onScreenKeyEventOfPlayer4(String key) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (key == 'up' && !cells[_currentStepOfPlayer4].top) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i - 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (key == 'down' && !cells[_currentStepOfPlayer4].bottom) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i + 1,
+            cells[_currentStepOfPlayer4].j)!;
+      } else if (key == 'left' && !cells[_currentStepOfPlayer4].left) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j - 1)!;
+      } else if (key == 'right' && !cells[_currentStepOfPlayer4].right) {
+        _currentStepOfPlayer4 = getIndex(cells[_currentStepOfPlayer4].i,
+            cells[_currentStepOfPlayer4].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
+  void _onScreenKeyEventOfPlayer5(String key) {
+    if (!_isCompleted || _isWin) {
+      return;
+    }
+    setState(() {
+      if (key == 'up' && !cells[_currentStepOfPlayer5].top) {
+        _currentStepOfPlayer5 = getIndex(cells[_currentStepOfPlayer5].i - 1,
+            cells[_currentStepOfPlayer5].j)!;
+      } else if (key == 'down' && !cells[_currentStepOfPlayer5].bottom) {
+        _currentStepOfPlayer5 = getIndex(cells[_currentStepOfPlayer5].i + 1,
+            cells[_currentStepOfPlayer5].j)!;
+      } else if (key == 'left' && !cells[_currentStepOfPlayer5].left) {
+        _currentStepOfPlayer5 = getIndex(cells[_currentStepOfPlayer5].i,
+            cells[_currentStepOfPlayer5].j - 1)!;
+      } else if (key == 'right' && !cells[_currentStepOfPlayer5].right) {
+        _currentStepOfPlayer5 = getIndex(cells[_currentStepOfPlayer5].i,
+            cells[_currentStepOfPlayer5].j + 1)!;
+      }
+    });
+    if (_currentStepOfPlayer5 == getIndex(0, row - 1)) {
+      setState(() {
+        _isWin = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -300,7 +477,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Two player mode",
+                    "Five player mode",
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
@@ -342,7 +519,16 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                                     : (index == _currentStepOfPlayer2 &&
                                             _isCompleted)
                                         ? Colors.orange
-                                        : Colors.transparent,
+                                        : (index == _currentStepOfPlayer3 &&
+                                                _isCompleted)
+                                            ? Colors.green
+                                            : (index == _currentStepOfPlayer4 &&
+                                                    _isCompleted)
+                                                ? Colors.pink
+                                                :(index == _currentStepOfPlayer4 &&
+                                                    _isCompleted)
+                                                ? Colors.brown
+                                                : Colors.transparent,
                                 // : cells[index].visited
                                 //     ? Colors.purple.withOpacity(0.5)
                                 // : Colors.transparent,

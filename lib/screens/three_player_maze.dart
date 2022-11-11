@@ -3,13 +3,14 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
 
 class ThreePlayerMaze extends StatefulWidget {
-  const ThreePlayerMaze({Key? key}) : super(key: key);
+  final String gameID;
+  const ThreePlayerMaze(this.gameID);
 
   @override
   State<ThreePlayerMaze> createState() => _ThreePlayerMazeState();
@@ -32,7 +33,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
   @override
   void initState() {
     super.initState();
-    ref.child("123/P1/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -47,7 +48,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
         }
       }
     });
-    ref.child("123/P1/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -62,7 +63,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
         }
       }
     });
-    ref.child("123/P2/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P2/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -77,7 +78,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
         }
       }
     });
-    ref.child("123/P2/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P2/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -92,7 +93,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
         }
       }
     });
-    ref.child("123/P3/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P3/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -107,7 +108,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
         }
       }
     });
-    ref.child("123/P3/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P3/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -228,96 +229,6 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
     }
   }
 
-  void _handleKeyEventOfPlayer1(RawKeyEvent event) {
-    if (!_isCompleted || _isWin) {
-      return;
-    }
-    setState(() {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
-          !cells[_currentStepOfPlayer1].top) {
-        _currentStepOfPlayer1 = getIndex(cells[_currentStepOfPlayer1].i - 1,
-            cells[_currentStepOfPlayer1].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
-          !cells[_currentStepOfPlayer1].bottom) {
-        _currentStepOfPlayer1 = getIndex(cells[_currentStepOfPlayer1].i + 1,
-            cells[_currentStepOfPlayer1].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
-          !cells[_currentStepOfPlayer1].left) {
-        _currentStepOfPlayer1 = getIndex(cells[_currentStepOfPlayer1].i,
-            cells[_currentStepOfPlayer1].j - 1)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
-          !cells[_currentStepOfPlayer1].right) {
-        _currentStepOfPlayer1 = getIndex(cells[_currentStepOfPlayer1].i,
-            cells[_currentStepOfPlayer1].j + 1)!;
-      }
-    });
-    if (_currentStepOfPlayer1 == getIndex(0, row - 1)) {
-      setState(() {
-        _isWin = true;
-      });
-    }
-  }
-
-  void _handleKeyEventOfPlayer2(RawKeyEvent event) {
-    if (!_isCompleted || _isWin) {
-      return;
-    }
-    setState(() {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
-          !cells[_currentStepOfPlayer2].top) {
-        _currentStepOfPlayer2 = getIndex(cells[_currentStepOfPlayer2].i - 1,
-            cells[_currentStepOfPlayer2].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
-          !cells[_currentStepOfPlayer2].bottom) {
-        _currentStepOfPlayer2 = getIndex(cells[_currentStepOfPlayer2].i + 1,
-            cells[_currentStepOfPlayer2].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
-          !cells[_currentStepOfPlayer2].left) {
-        _currentStepOfPlayer2 = getIndex(cells[_currentStepOfPlayer2].i,
-            cells[_currentStepOfPlayer2].j - 1)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
-          !cells[_currentStepOfPlayer2].right) {
-        _currentStepOfPlayer2 = getIndex(cells[_currentStepOfPlayer2].i,
-            cells[_currentStepOfPlayer2].j + 1)!;
-      }
-    });
-    if (_currentStepOfPlayer2 == getIndex(0, row - 1)) {
-      setState(() {
-        _isWin = true;
-      });
-    }
-  }
-
-  void _handleKeyEventOfPlayer3(RawKeyEvent event) {
-    if (!_isCompleted || _isWin) {
-      return;
-    }
-    setState(() {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp &&
-          !cells[_currentStepOfPlayer3].top) {
-        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i - 1,
-            cells[_currentStepOfPlayer3].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown &&
-          !cells[_currentStepOfPlayer3].bottom) {
-        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i + 1,
-            cells[_currentStepOfPlayer3].j)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
-          !cells[_currentStepOfPlayer3].left) {
-        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
-            cells[_currentStepOfPlayer3].j - 1)!;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
-          !cells[_currentStepOfPlayer3].right) {
-        _currentStepOfPlayer3 = getIndex(cells[_currentStepOfPlayer3].i,
-            cells[_currentStepOfPlayer3].j + 1)!;
-      }
-    });
-    if (_currentStepOfPlayer3 == getIndex(0, row - 1)) {
-      setState(() {
-        _isWin = true;
-      });
-    }
-  }
-
   void _onScreenKeyEventOfPlayer1(String key) {
     if (!_isCompleted || _isWin) {
       return;
@@ -399,6 +310,45 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Maze runner",
+            style: GoogleFonts.josefinSans(fontSize: 30),
+          ),
+          backgroundColor: Colors.black,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 72, 80, 74),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        "assets/l.png",
+                        width: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        widget.gameID,
+                        style: GoogleFonts.josefinSans(fontSize: 30),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
         backgroundColor: Colors.black,
         body: SafeArea(
           child: Padding(

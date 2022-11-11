@@ -68,8 +68,16 @@ class _MyControllerState extends State<MyController> {
           setDefaultValuesOfPlayer();
         } else if (value.snapshot.child("P2").exists) {
           player = "P3";
+          setDefaultValuesOfPlayer();
         } else if (value.snapshot.child("P3").exists) {
           player = "P4";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P4").exists) {
+          player = "P5";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P5").exists) {
+          player = "P6";
+          setDefaultValuesOfPlayer();
         }
       }
       Fluttertoast.showToast(
