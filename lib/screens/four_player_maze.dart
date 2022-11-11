@@ -100,12 +100,12 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer3('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer3('right');
         }
       }
     });
@@ -115,12 +115,12 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer3('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer3('down');
         }
       }
     });
@@ -130,12 +130,12 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer4('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer4('right');
         }
       }
     });
@@ -145,12 +145,12 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer4('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer4('down');
         }
       }
     });

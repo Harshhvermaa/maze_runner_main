@@ -101,12 +101,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer3('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer3('right');
         }
       }
     });
@@ -116,12 +116,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer3('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer3('down');
         }
       }
     });
@@ -131,12 +131,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer4('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer4('right');
         }
       }
     });
@@ -146,12 +146,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer4('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer4('down');
         }
       }
     });
@@ -161,12 +161,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer5('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer5('right');
         }
       }
     });
@@ -176,12 +176,12 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer5('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer5('down');
         }
       }
     });
@@ -525,7 +525,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                                             : (index == _currentStepOfPlayer4 &&
                                                     _isCompleted)
                                                 ? Colors.pink
-                                                :(index == _currentStepOfPlayer4 &&
+                                                :(index == _currentStepOfPlayer5 &&
                                                     _isCompleted)
                                                 ? Colors.brown
                                                 : Colors.transparent,

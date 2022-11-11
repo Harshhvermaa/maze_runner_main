@@ -99,12 +99,12 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
 
         // if joystick moves left
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('left');
+          _onScreenKeyEventOfPlayer3('left');
         }
 
         //if joystick moves right
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('right');
+          _onScreenKeyEventOfPlayer3('right');
         }
       }
     });
@@ -114,12 +114,12 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
 
         // if joystick moves up
         if (double.parse(value) < 0) {
-          _onScreenKeyEventOfPlayer2('up');
+          _onScreenKeyEventOfPlayer3('up');
         }
 
         // if joystick moves down
         if (double.parse(value) > 0) {
-          _onScreenKeyEventOfPlayer2('down');
+          _onScreenKeyEventOfPlayer3('down');
         }
       }
     });
