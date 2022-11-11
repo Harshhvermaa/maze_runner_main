@@ -59,24 +59,34 @@ class _MyControllerState extends State<MyController> {
               msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
           player = "P1";
           setDefaultValuesOfPlayer();
-        } else if (value.snapshot.child("P1").exists) {
+        } else if (value.snapshot.child("P1").exists &&
+            value.snapshot.child("P2").exists &&
+            value.snapshot.child("P3").exists &&
+            value.snapshot.child("P4").exists &&
+            value.snapshot.child("P5").exists) {
           Fluttertoast.showToast(
               msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
           Fluttertoast.showToast(
               msg: "Player 2 added !!!!!!!!!!!!!!!!!!!!!!!!");
-          player = "P2";
+          player = "P6";
           setDefaultValuesOfPlayer();
-        } else if (value.snapshot.child("P2").exists) {
-          player = "P3";
-          setDefaultValuesOfPlayer();
-        } else if (value.snapshot.child("P3").exists) {
-          player = "P4";
-          setDefaultValuesOfPlayer();
-        } else if (value.snapshot.child("P4").exists) {
+        } else if (value.snapshot.child("P1").exists &&
+            value.snapshot.child("P2").exists &&
+            value.snapshot.child("P3").exists &&
+            value.snapshot.child("P4").exists) {
           player = "P5";
           setDefaultValuesOfPlayer();
-        } else if (value.snapshot.child("P5").exists) {
-          player = "P6";
+        } else if (value.snapshot.child("P1").exists &&
+            value.snapshot.child("P2").exists &&
+            value.snapshot.child("P3").exists) {
+          player = "P4";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P1").exists &&
+            value.snapshot.child("P2").exists) {
+          player = "P3";
+          setDefaultValuesOfPlayer();
+        } else if (value.snapshot.child("P1").exists) {
+          player = "P2";
           setDefaultValuesOfPlayer();
         }
       }
