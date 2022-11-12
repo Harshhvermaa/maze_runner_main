@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/controller.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
@@ -39,9 +40,41 @@ class _KeyboardState extends State<Keyboard> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(widget.nickname),
+            Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 1),
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      blurRadius: 8.0,
+                    ),
+                  ]),
+              child: Image(
+                image: AssetImage("assets/pp.png"),
+                height: 120,
+                width: 120,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Hello " + widget.nickname,
+              style: GoogleFonts.roboto(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 24),
               child: Container(
@@ -68,17 +101,24 @@ class _KeyboardState extends State<Keyboard> {
                         width: 20,
                       ),
                       Expanded(
-                        child: TextField(
-                          showCursor: _text.text.isEmpty ? true : false,
-                          keyboardType: TextInputType.none,
-                          maxLength: 6,
-                          controller: _text,
-                          cursorHeight: 40,
-                          style: const TextStyle(
-                              fontSize: 40, color: Colors.white),
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 17),
-                              border: InputBorder.none),
+                        child: Center(
+                          child: TextField(
+                            showCursor: _text.text.isEmpty ? true : false,
+                            keyboardType: TextInputType.none,
+                            maxLength: 6,
+                            controller: _text,
+                            cursorHeight: 40,
+                            style: TextStyle(fontSize: 40, color: Colors.white),
+                            decoration: InputDecoration(
+                                hintText: "Code",
+                                alignLabelWithHint: true,
+                                hintStyle: GoogleFonts.roboto(
+                                    color: Colors.white.withOpacity(0.2),
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w600),
+                                contentPadding: EdgeInsets.only(bottom: -20),
+                                border: InputBorder.none),
+                          ),
                         ),
                       )
                     ],
@@ -87,7 +127,7 @@ class _KeyboardState extends State<Keyboard> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             SizedBox(
                 // height: 550,

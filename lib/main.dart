@@ -5,6 +5,7 @@ import 'package:maze_runner/firebase_options.dart';
 import 'package:maze_runner/screens/frontScreen.dart';
 import 'package:maze_runner/screens/join.dart';
 import 'package:maze_runner/screens/keyboard.dart';
+import 'package:maze_runner/screens/maze_generator.dart';
 import 'package:maze_runner/screens/two_player_contoller.dart';
 import 'package:maze_runner/screens/two_player_maze.dart';
 import 'package:maze_runner/screens/web_first_screen.dart';

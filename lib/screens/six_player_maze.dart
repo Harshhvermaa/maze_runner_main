@@ -526,7 +526,7 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -540,7 +540,7 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(

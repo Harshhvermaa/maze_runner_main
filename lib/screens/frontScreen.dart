@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/keyboard.dart';
 
 class FrontScreen extends StatefulWidget {
@@ -36,12 +38,17 @@ class _FrontScreenState extends State<FrontScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Center(
                   child: TextField(
-                    maxLength: 6,
+                    // maxLength: 6,
                     controller: _nickname,
                     cursorHeight: 40,
                     style: TextStyle(fontSize: 40, color: Colors.white),
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(top: 12),
+                        hintText: "Nickname",
+                        hintStyle: GoogleFonts.roboto(
+                            color: Colors.white.withOpacity(0.2),
+                            fontSize: 40,
+                            fontWeight: FontWeight.w600),
+                        contentPadding: EdgeInsets.only(),
                         border: InputBorder.none),
                   ),
                 ),
@@ -58,16 +65,18 @@ class _FrontScreenState extends State<FrontScreen> {
                 width: screenWidth,
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 0, 0, 0),
-                  // borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Keyboard(
-                                  nickname: _nickname.text,
-                                )));
+                    _nickname.text.length > 3
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Keyboard(
+                                      nickname: _nickname.text,
+                                    )))
+                        : Fluttertoast.showToast(msg: "Please write your name");
                   },
                   child: Text(
                     "Submit",

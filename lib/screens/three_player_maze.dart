@@ -349,7 +349,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -363,7 +363,7 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(

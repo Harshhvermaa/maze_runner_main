@@ -467,7 +467,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -481,7 +481,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(
@@ -525,10 +525,10 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                                             : (index == _currentStepOfPlayer4 &&
                                                     _isCompleted)
                                                 ? Colors.pink
-                                                :(index == _currentStepOfPlayer5 &&
-                                                    _isCompleted)
-                                                ? Colors.brown
-                                                : Colors.transparent,
+                                                : (index == _currentStepOfPlayer5 &&
+                                                        _isCompleted)
+                                                    ? Colors.brown
+                                                    : Colors.transparent,
                                 // : cells[index].visited
                                 //     ? Colors.purple.withOpacity(0.5)
                                 // : Colors.transparent,

@@ -408,7 +408,7 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -422,7 +422,7 @@ class _FourPlayerMazeState extends State<FourPlayerMaze> {
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(
