@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/web_first_screen.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
 
 class MazeGenerator extends StatefulWidget {
-  final String gameId;
-  const MazeGenerator(this.gameId);
+  final String gameID;
+  const MazeGenerator(this.gameID);
 
   @override
   State<MazeGenerator> createState() => _MazeGeneratorState();
@@ -22,7 +23,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   // JoystickMode _joystickMode = JoystickMode.horizontalAndVertical;
 
   // Timer? _timer2;
-  String playerName = "";
+  String playerName = "hritik";
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStep;
@@ -32,10 +33,13 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   bool _isCompleted = false;
   bool _isWin = false;
 
+  int difficulty = Random().nextInt(3);
+
   @override
   void initState() {
+    print(difficulty);
     super.initState();
-    ref.child("${widget.gameId}/P1/x").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/x").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -50,7 +54,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
         }
       }
     });
-    ref.child("${widget.gameId}/P1/y").onValue.listen((event) {
+    ref.child("${widget.gameID}/P1/y").onValue.listen((event) {
       if (event.snapshot.exists) {
         var value = event.snapshot.value.toString();
 
@@ -197,12 +201,53 @@ class _MazeGeneratorState extends State<MazeGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
-            "Maze runner",
+            "Single Player Maze runner",
             style: GoogleFonts.josefinSans(fontSize: 30),
           ),
+          centerTitle: true,
           backgroundColor: Colors.black,
           actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        WebFirstScreen(gameID: int.parse(widget.gameID))));
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 72, 80, 74),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/smartphone.png",
+                          width: 50,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add more phones",
+                          style: GoogleFonts.josefinSans(fontSize: 28),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
               child: Container(
@@ -225,7 +270,7 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                         width: 5,
                       ),
                       Text(
-                        widget.gameId,
+                        widget.gameID,
                         style: GoogleFonts.josefinSans(fontSize: 30),
                       ),
                     ],
@@ -235,83 +280,98 @@ class _MazeGeneratorState extends State<MazeGenerator> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Center(
-                child: FittedBox(
-              child: Column(
+        backgroundColor: Colors.blue,
+        body: Container(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                  child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Single player mode",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Row(children: [
-                    Container(height: 30, width: 30, color: Colors.blue),
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    const Text(""),
-                  ]),
+                  // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  //   Text(
+                  //     playerName,
+                  //     style: const TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 30,
+                  //     ),
+                  //   ),
+                  //   const SizedBox(
+                  //     width: 20,
+                  //   ),
+                  //   Container(
+                  //       // decoration: BoxDecoration(
+                  //       //   // border: Border.all(color: Colors.black, width: 1),
+                  //       // ),
+                  //       height: 30,
+                  //       width: 30,
+                  //       color: const Color.fromARGB(255, 47, 0, 122)),
+                  // ]),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
                   Container(
-                    color: Colors.red,
-                    height: height,
-                    width: width,
-                    child: Stack(
-                      children: List.generate(
-                        cells.length,
-                        (index) => Positioned(
-                          top: cells[index].x,
-                          left: cells[index].y,
-                          child: Container(
-                              height: spacing,
-                              width: spacing,
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  right: cells[index].right
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  bottom: cells[index].bottom
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  left: cells[index].left
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  top: cells[index].top
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 30),
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                      height: height,
+                      width: width,
+                      child: Stack(
+                        children: List.generate(
+                          cells.length,
+                          (index) => Positioned(
+                            top: cells[index].x,
+                            left: cells[index].y,
+                            child: Container(
+                                height: spacing,
+                                width: spacing,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    right: cells[index].right
+                                        ? const BorderSide(
+                                            color: Colors.white, width: 1)
+                                        : BorderSide.none,
+                                    bottom: cells[index].bottom
+                                        ? const BorderSide(
+                                            color: Colors.white, width: 1)
+                                        : BorderSide.none,
+                                    left: cells[index].left
+                                        ? const BorderSide(
+                                            color: Colors.white, width: 1)
+                                        : BorderSide.none,
+                                    top: cells[index].top
+                                        ? const BorderSide(
+                                            color: Colors.white, width: 1)
+                                        : BorderSide.none,
+                                  ),
+                                  // image: DecorationImage(image: AssetImage("assets/runner.png")),
+                                  color: index == _currentStep && _isCompleted
+                                      ? const Color.fromARGB(255, 47, 0, 122)
+                                      // : cells[index].visited
+                                      //     ? Colors.purple.withOpacity(0.5)
+                                      : Colors.transparent,
                                 ),
-                                // image: DecorationImage(image: AssetImage("assets/runner.png")),
-                                color: index == _currentStep && _isCompleted
-                                    ? Colors.blue.withOpacity(0.7)
-                                    // : cells[index].visited
-                                    //     ? Colors.purple.withOpacity(0.5)
-                                    : Colors.transparent,
-                              ),
-                              padding: const EdgeInsets.all(2),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: index == 0
-                                    ? const Text(
-                                        'Start',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      )
-                                    : index == getIndex(0, row - 1)
-                                        ? const Text(
-                                            'End',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          )
-                                        : null,
-                              )),
+                                padding: const EdgeInsets.all(2),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: index == 0
+                                      ? const Text(
+                                          'Start',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        )
+                                      : index == getIndex(0, row - 1)
+                                          ? const Text(
+                                              'End',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18),
+                                            )
+                                          : null,
+                                )),
+                          ),
                         ),
                       ),
                     ),
@@ -352,19 +412,14 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                             )
                           : const SizedBox(),
                 ],
-              ),
-            )),
+              )),
+            ),
           ),
         ));
   }
 
   void getPlayerName() async {
-    ref.child("winner").once().then((value) => {
-          if (value.snapshot.exists)
-            {playerName = value.snapshot.value as String}
-        });
-
-    ref.child("${widget.gameId}/name").once().then((value) {
+    ref.child("${widget.gameID}/P1/name").once().then((value) {
       if (value.snapshot.exists) {
         playerName = value.snapshot.value as String;
       }

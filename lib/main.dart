@@ -3,10 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:maze_runner/firebase_options.dart';
 import 'package:maze_runner/screens/frontScreen.dart';
-import 'package:maze_runner/screens/join.dart';
 import 'package:maze_runner/screens/keyboard.dart';
-import 'package:maze_runner/screens/two_player_contoller.dart';
-import 'package:maze_runner/screens/two_player_maze.dart';
 import 'package:maze_runner/screens/web_first_screen.dart';
 
 void main() async {
@@ -25,10 +22,13 @@ class MyApp extends StatelessWidget {
     // var screenHeight = MediaQuery.of(context).size.height;
     // var screenWidth = MediaQuery.of(context).size.width;
 
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Maze Generator',
       debugShowCheckedModeBanner: false,
-      home: kIsWeb ? WebFirstScreen() : FrontScreen(),
+      home: @override
+      bool get mounted {
+        
+      } ? WebFirstScreen() : FrontScreen(),
     );
   }
 }

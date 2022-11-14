@@ -1,17 +1,20 @@
+import 'dart:math';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/five_player_maze.dart';
 import 'package:maze_runner/screens/four_player_maze.dart';
 
-import 'dart:math';
-
 import 'package:maze_runner/screens/maze_generator.dart';
+import 'package:maze_runner/screens/six_player_maze.dart';
 import 'package:maze_runner/screens/three_player_maze.dart';
 import 'package:maze_runner/screens/two_player_maze.dart';
 
 class WebFirstScreen extends StatefulWidget {
-  const WebFirstScreen({super.key});
+  final int? gameID;
+  const WebFirstScreen({this.gameID});
 
   @override
   State<WebFirstScreen> createState() => _WebFirstScreenState();
@@ -26,17 +29,15 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
     // TODO: implement initState
     super.initState();
 
-    if (true) {
+    if (widget.gameID == null) {
+      Fluttertoast.showToast(msg: "gameid ${widget.gameID}");
       id = 100000 + Random().nextInt(899999);
       ref.child(id.toString()).set("");
       ref.child(id.toString()).onValue.listen((event) {
         if (event.snapshot.exists) {
           int noOfNodes = event.snapshot.children.length;
-          Fluttertoast.showToast(
-            msg: "nodes : $noOfNodes",
-          );
-          print("no of nodes inside web first page = $noOfNodes");
-          if (noOfPlayers < noOfNodes) {
+
+          if ((noOfPlayers < noOfNodes)) {
             if (noOfNodes == 1) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => MazeGenerator(id.toString())));
@@ -49,11 +50,19 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
             } else if (noOfNodes == 4) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => FourPlayerMaze(id.toString())));
+            } else if (noOfNodes == 5) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FivePlayerMaze(id.toString())));
+            } else if (noOfNodes == 6) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SixPlayerMaze(id.toString())));
             }
             noOfPlayers++;
           }
         }
       });
+    } else {
+      id = widget.gameID!;
     }
   }
 
@@ -61,6 +70,7 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Maze runner",
           style: GoogleFonts.josefinSans(fontSize: 30),

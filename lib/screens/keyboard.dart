@@ -1,10 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/controller.dart';
-import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 class Keyboard extends StatefulWidget {
   String nickname;
@@ -39,21 +38,60 @@ class _KeyboardState extends State<Keyboard> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(widget.nickname),
+            Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+              ),
+              child: const Image(
+                image: AssetImage("assets/man.png"),
+                height: 120,
+                width: 120,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Hello ",
+                  style: GoogleFonts.josefinSans(
+                      color: Colors.green,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  widget.nickname,
+                  style: GoogleFonts.josefinSans(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 24),
               child: Container(
                 height: 70,
                 width: screenWidth,
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.blue,
-                    )),
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.blue,
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Row(
@@ -68,17 +106,26 @@ class _KeyboardState extends State<Keyboard> {
                         width: 20,
                       ),
                       Expanded(
-                        child: TextField(
-                          showCursor: _text.text.isEmpty ? true : false,
-                          keyboardType: TextInputType.none,
-                          maxLength: 6,
-                          controller: _text,
-                          cursorHeight: 40,
-                          style: const TextStyle(
-                              fontSize: 40, color: Colors.white),
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 17),
-                              border: InputBorder.none),
+                        child: Center(
+                          child: TextField(
+                            showCursor: _text.text.isEmpty ? true : false,
+                            keyboardType: TextInputType.none,
+                            maxLength: 6,
+                            controller: _text,
+                            cursorHeight: 40,
+                            style: GoogleFonts.josefinSans(
+                                fontSize: 40, color: Colors.white),
+                            decoration: InputDecoration(
+                                hintText: "Code",
+                                alignLabelWithHint: true,
+                                hintStyle: GoogleFonts.josefinSans(
+                                    color: Colors.white.withOpacity(0.2),
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w600),
+                                contentPadding:
+                                    const EdgeInsets.only(bottom: -20),
+                                border: InputBorder.none),
+                          ),
                         ),
                       )
                     ],
@@ -87,7 +134,7 @@ class _KeyboardState extends State<Keyboard> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             SizedBox(
                 // height: 550,
@@ -199,7 +246,7 @@ class _KeyboardState extends State<Keyboard> {
           child: index < 9
               ? Text(
                   "${index + 1}".toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.josefinSans(
                       // fontWeight: FontWeight.w600,
                       fontSize: 30,
                       color: Colors.white),

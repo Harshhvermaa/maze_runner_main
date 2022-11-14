@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/keyboard.dart';
 
 class FrontScreen extends StatefulWidget {
@@ -9,13 +11,13 @@ class FrontScreen extends StatefulWidget {
 }
 
 class _FrontScreenState extends State<FrontScreen> {
-  TextEditingController _nickname = TextEditingController();
+  final TextEditingController _nickname = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 42, 42, 42),
+      backgroundColor: const Color.fromARGB(255, 42, 42, 42),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -25,7 +27,7 @@ class _FrontScreenState extends State<FrontScreen> {
               height: 70,
               width: screenWidth,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: const Color.fromARGB(255, 0, 0, 0),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   width: 2,
@@ -36,19 +38,28 @@ class _FrontScreenState extends State<FrontScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Center(
                   child: TextField(
-                    maxLength: 6,
+                    // maxLength: 6,
                     controller: _nickname,
                     cursorHeight: 40,
-                    style: TextStyle(fontSize: 40, color: Colors.white),
+                    style: GoogleFonts.josefinSans(
+                      fontSize: 40,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(top: 12),
+                        hintText: "Nickname",
+                        hintStyle: GoogleFonts.josefinSans(
+                            color: Colors.white.withOpacity(0.2),
+                            fontSize: 40,
+                            fontWeight: FontWeight.w600),
+                        contentPadding: const EdgeInsets.only(),
                         border: InputBorder.none),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Padding(
@@ -57,27 +68,29 @@ class _FrontScreenState extends State<FrontScreen> {
                 height: 70,
                 width: screenWidth,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  // borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Keyboard(
-                                  nickname: _nickname.text,
-                                )));
+                    _nickname.text.length > 3
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Keyboard(
+                                      nickname: _nickname.text,
+                                    )))
+                        : Fluttertoast.showToast(msg: "Please write your name");
                   },
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(fontSize: 25),
-                  ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                     // side: BorderSide(color: Colors.red)
                   ))),
+                  child: Text(
+                    "Submit",
+                    style: GoogleFonts.josefinSans(fontSize: 25),
+                  ),
                 )),
           ),
         ],

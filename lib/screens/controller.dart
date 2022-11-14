@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class MyController extends StatefulWidget {
   final String gameID;
@@ -56,8 +55,6 @@ class _MyControllerState extends State<MyController> {
         // }
 
         if (value.snapshot.value == "") {
-          Fluttertoast.showToast(
-              msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
           player = "P1";
           setDefaultValuesOfPlayer();
         } else if (value.snapshot.child("P1").exists &&
@@ -65,10 +62,6 @@ class _MyControllerState extends State<MyController> {
             value.snapshot.child("P3").exists &&
             value.snapshot.child("P4").exists &&
             value.snapshot.child("P5").exists) {
-          Fluttertoast.showToast(
-              msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
-          Fluttertoast.showToast(
-              msg: "Player 2 added !!!!!!!!!!!!!!!!!!!!!!!!");
           player = "P6";
           setDefaultValuesOfPlayer();
         } else if (value.snapshot.child("P1").exists &&
@@ -91,8 +84,6 @@ class _MyControllerState extends State<MyController> {
           setDefaultValuesOfPlayer();
         }
       }
-      Fluttertoast.showToast(
-          msg: "Player 1 added !!!!!! value -> ${value.snapshot.value}");
     });
     // setDefaultValuesOfPlayer();
     // Fluttertoast.showToast(msg: "Player $player");
@@ -102,7 +93,6 @@ class _MyControllerState extends State<MyController> {
   Widget build(BuildContext context) {
     Timer? timer2;
     JoystickMode joystickMode = JoystickMode.horizontalAndVertical;
-    Fluttertoast.showToast(msg: "controller build !!!!");
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -196,8 +186,6 @@ class _MyControllerState extends State<MyController> {
     await ref
         .child("${widget.gameID}/$player")
         .set({"name": widget.nickName, "x": "0", "y": "0"});
-    Fluttertoast.showToast(msg: "set defalut value");
     // await ref.child("${widget.gameID}/a").remove();
-    
   }
 }

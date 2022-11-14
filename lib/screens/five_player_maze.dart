@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/web_first_screen.dart';
+import 'package:maze_runner/widgets/player_color_info.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
@@ -18,6 +20,11 @@ class FivePlayerMaze extends StatefulWidget {
 
 class _FivePlayerMazeState extends State<FivePlayerMaze> {
   var ref = FirebaseDatabase.instance.ref();
+  String playerName1 = '';
+  String playerName2 = '';
+  String playerName3 = '';
+  String playerName4 = '';
+  String playerName5 = '';
 
   late List<Cell> cells;
   late final Timer _timer;
@@ -185,6 +192,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
         }
       }
     });
+    getPlayerName();
     reset();
   }
 
@@ -429,12 +437,57 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
-            "Maze runner",
+            "Five Player Maze runner",
             style: GoogleFonts.josefinSans(fontSize: 30),
           ),
+          centerTitle: true,
           backgroundColor: Colors.black,
           actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WebFirstScreen(
+                      gameID: int.parse(widget.gameID),
+                    ),
+                  ),
+                );
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 72, 80, 74),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/smartphone.png",
+                          width: 50,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add more phones",
+                          style: GoogleFonts.josefinSans(fontSize: 28),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
               child: Container(
@@ -467,7 +520,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -476,12 +529,58 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Five player mode",
-                    style: TextStyle(color: Colors.white),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          PlayerColorInfo(
+                            playerName: playerName1,
+                            color: const Color.fromARGB(255, 10, 25, 161),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PlayerColorInfo(
+                            playerName: playerName2,
+                            color: Colors.orange,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Column(
+                        children: [
+                          PlayerColorInfo(
+                            playerName: playerName3,
+                            color: Colors.green,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PlayerColorInfo(
+                              playerName: playerName4, color: Colors.pink),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      PlayerColorInfo(
+                          playerName: playerName5, color: Colors.brown),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(
@@ -491,66 +590,67 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                           top: cells[index].x,
                           left: cells[index].y,
                           child: Container(
-                              height: spacing,
-                              width: spacing,
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  right: cells[index].right
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  bottom: cells[index].bottom
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  left: cells[index].left
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                  top: cells[index].top
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
-                                      : BorderSide.none,
-                                ),
-                                // image: DecorationImage(image: AssetImage("assets/runner.png")),
-                                color: (index == _currentStepOfPlayer1 &&
-                                        _isCompleted)
-                                    ? Colors.blue.withOpacity(0.7)
-                                    : (index == _currentStepOfPlayer2 &&
-                                            _isCompleted)
-                                        ? Colors.orange
-                                        : (index == _currentStepOfPlayer3 &&
-                                                _isCompleted)
-                                            ? Colors.green
-                                            : (index == _currentStepOfPlayer4 &&
-                                                    _isCompleted)
-                                                ? Colors.pink
-                                                :(index == _currentStepOfPlayer5 &&
-                                                    _isCompleted)
-                                                ? Colors.brown
-                                                : Colors.transparent,
-                                // : cells[index].visited
-                                //     ? Colors.purple.withOpacity(0.5)
-                                // : Colors.transparent,
+                            height: spacing,
+                            width: spacing,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: cells[index].right
+                                    ? const BorderSide(
+                                        color: Colors.white, width: 1)
+                                    : BorderSide.none,
+                                bottom: cells[index].bottom
+                                    ? const BorderSide(
+                                        color: Colors.white, width: 1)
+                                    : BorderSide.none,
+                                left: cells[index].left
+                                    ? const BorderSide(
+                                        color: Colors.white, width: 1)
+                                    : BorderSide.none,
+                                top: cells[index].top
+                                    ? const BorderSide(
+                                        color: Colors.white, width: 1)
+                                    : BorderSide.none,
                               ),
-                              padding: const EdgeInsets.all(2),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: index == 0
-                                    ? const Text(
-                                        'Start',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      )
-                                    : index == getIndex(0, row - 1)
-                                        ? const Text(
-                                            'End',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          )
-                                        : null,
-                              )),
+                              // image: DecorationImage(image: AssetImage("assets/runner.png")),
+                              color: (index == _currentStepOfPlayer1 &&
+                                      _isCompleted)
+                                  ? Colors.blue.withOpacity(0.7)
+                                  : (index == _currentStepOfPlayer2 &&
+                                          _isCompleted)
+                                      ? Colors.orange
+                                      : (index == _currentStepOfPlayer3 &&
+                                              _isCompleted)
+                                          ? Colors.green
+                                          : (index == _currentStepOfPlayer4 &&
+                                                  _isCompleted)
+                                              ? Colors.pink
+                                              : (index == _currentStepOfPlayer5 &&
+                                                      _isCompleted)
+                                                  ? Colors.brown
+                                                  : Colors.transparent,
+                              // : cells[index].visited
+                              //     ? Colors.purple.withOpacity(0.5)
+                              // : Colors.transparent,
+                            ),
+                            padding: const EdgeInsets.all(2),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: index == 0
+                                  ? const Text(
+                                      'Start',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    )
+                                  : index == getIndex(0, row - 1)
+                                      ? const Text(
+                                          'End',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        )
+                                      : null,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -560,7 +660,17 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                   ),
                   Text(
                     _isWin
-                        ? 'You Win !!'
+                        ? (_currentStepOfPlayer1 == getIndex(0, row - 1))
+                            ? "$playerName1 Win !!"
+                            : (_currentStepOfPlayer2 == getIndex(0, row - 1))
+                                ? "$playerName2 Win !!"
+                                : (_currentStepOfPlayer3 ==
+                                        getIndex(0, row - 1))
+                                    ? "$playerName3 Win !!"
+                                    : (_currentStepOfPlayer4 ==
+                                            getIndex(0, row - 1))
+                                        ? "$playerName3 Win !!"
+                                        : "$playerName5 Win !!"
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
@@ -595,5 +705,33 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
             )),
           ),
         ));
+  }
+
+  void getPlayerName() async {
+    ref.child("${widget.gameID}/P1/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName1 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P2/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName2 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P3/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName3 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P4/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName4 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P5/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName5 = value.snapshot.value as String;
+      }
+    });
   }
 }

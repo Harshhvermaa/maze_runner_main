@@ -1,3 +1,3 @@
-const double spacing = 20;
-const double height = 400;
-const double width = 400;
+const double spacing = 25;
+const double height = 500;
+const double width = 500;

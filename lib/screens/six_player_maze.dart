@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/web_first_screen.dart';
+import 'package:maze_runner/widgets/player_color_info.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
@@ -18,7 +20,12 @@ class SixPlayerMaze extends StatefulWidget {
 
 class _SixPlayerMazeState extends State<SixPlayerMaze> {
   var ref = FirebaseDatabase.instance.ref();
-
+  String playerName1 = '';
+  String playerName2 = '';
+  String playerName3 = '';
+  String playerName4 = '';
+  String playerName5 = '';
+  String playerName6 = '';
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStepOfPlayer1;
@@ -216,6 +223,7 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
         }
       }
     });
+    getPlayerName();
     reset();
   }
 
@@ -488,12 +496,57 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
-            "Maze runner",
+            "Six Player Maze runner",
             style: GoogleFonts.josefinSans(fontSize: 30),
           ),
+          centerTitle: true,
           backgroundColor: Colors.black,
           actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WebFirstScreen(
+                      gameID: int.parse(widget.gameID),
+                    ),
+                  ),
+                );
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 72, 80, 74),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/smartphone.png",
+                          width: 50,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add more phones",
+                          style: GoogleFonts.josefinSans(fontSize: 28),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
               child: Container(
@@ -526,7 +579,7 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -535,12 +588,69 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Five player mode",
-                    style: TextStyle(color: Colors.white),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          PlayerColorInfo(
+                            playerName: playerName1,
+                            color: const Color.fromARGB(255, 10, 25, 161),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PlayerColorInfo(
+                              playerName: playerName2, color: Colors.orange),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Column(
+                        children: [
+                          PlayerColorInfo(
+                              playerName: playerName3, color: Colors.green),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PlayerColorInfo(
+                              playerName: playerName4, color: Colors.pink),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Column(
+                        children: [
+                          PlayerColorInfo(
+                            playerName: playerName5,
+                            color: Colors.brown,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PlayerColorInfo(
+                            playerName: playerName6,
+                            color: Colors.purple,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(
@@ -622,7 +732,20 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
                   ),
                   Text(
                     _isWin
-                        ? 'You Win !!'
+                        ? (_currentStepOfPlayer1 == getIndex(0, row - 1))
+                            ? "$playerName1 Win !!"
+                            : (_currentStepOfPlayer2 == getIndex(0, row - 1))
+                                ? "$playerName2 Win !!"
+                                : (_currentStepOfPlayer3 ==
+                                        getIndex(0, row - 1))
+                                    ? "$playerName3 Win !!"
+                                    : (_currentStepOfPlayer4 ==
+                                            getIndex(0, row - 1))
+                                        ? "$playerName4 Win !!"
+                                        : (_currentStepOfPlayer5 ==
+                                                getIndex(0, row - 1))
+                                            ? "$playerName5 Win !!"
+                                            : "$playerName6 Win !!"
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
@@ -657,5 +780,38 @@ class _SixPlayerMazeState extends State<SixPlayerMaze> {
             )),
           ),
         ));
+  }
+
+  void getPlayerName() async {
+    ref.child("${widget.gameID}/P1/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName1 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P2/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName2 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P3/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName3 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P4/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName4 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P5/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName5 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P6/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName6 = value.snapshot.value as String;
+      }
+    });
   }
 }

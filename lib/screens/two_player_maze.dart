@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maze_runner/screens/web_first_screen.dart';
 
 import '../constants.dart';
 import '../models/cell.dart';
+import '../widgets/player_color_info.dart';
 
 class TwoPlayerMaze extends StatefulWidget {
   final String gameID;
@@ -18,7 +20,8 @@ class TwoPlayerMaze extends StatefulWidget {
 
 class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
   var ref = FirebaseDatabase.instance.ref();
-
+  String playerName1 = '';
+  String playerName2 = '';
   late List<Cell> cells;
   late final Timer _timer;
   late int _currentStepOfPlayer1;
@@ -92,6 +95,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         }
       }
     });
+    getPlayerName();
     reset();
   }
 
@@ -252,12 +256,57 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
-            "Maze runner",
+            "Two Player Maze runner",
             style: GoogleFonts.josefinSans(fontSize: 30),
           ),
+          centerTitle: true,
           backgroundColor: Colors.black,
           actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WebFirstScreen(
+                      gameID: int.parse(widget.gameID),
+                    ),
+                  ),
+                );
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 72, 80, 74),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/smartphone.png",
+                          width: 50,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add more phones",
+                          style: GoogleFonts.josefinSans(fontSize: 28),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
               child: Container(
@@ -290,7 +339,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
             )
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -299,12 +348,22 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Two player mode",
-                    style: TextStyle(color: Colors.white),
+                  PlayerColorInfo(
+                    playerName: playerName1,
+                    color: const Color.fromARGB(255, 10, 25, 161),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  PlayerColorInfo(
+                    playerName: playerName2,
+                    color: Colors.orange,
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   Container(
-                    color: Colors.red,
+                    color: Colors.black,
                     height: height,
                     width: width,
                     child: Stack(
@@ -374,7 +433,9 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                   ),
                   Text(
                     _isWin
-                        ? 'You Win !!'
+                        ? (_currentStepOfPlayer1 == getIndex(0, row - 1))
+                            ? "$playerName1 Win !!"
+                            : "$playerName2 Win !!"
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
@@ -409,5 +470,18 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
             )),
           ),
         ));
+  }
+
+  void getPlayerName() async {
+    ref.child("${widget.gameID}/P1/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName1 = value.snapshot.value as String;
+      }
+    });
+    ref.child("${widget.gameID}/P2/name").once().then((value) {
+      if (value.snapshot.exists) {
+        playerName2 = value.snapshot.value as String;
+      }
+    });
   }
 }
