@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/web_first_screen.dart';
 
@@ -259,7 +260,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
           automaticallyImplyLeading: false,
           title: Text(
             "Two Player Maze runner",
-            style: GoogleFonts.josefinSans(fontSize: 30),
+            style: GoogleFonts.josefinSans(fontSize: 30.sp),
           ),
           centerTitle: true,
           backgroundColor: Colors.black,
@@ -275,31 +276,30 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                 );
               },
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     color: const Color.fromARGB(255, 72, 80, 74),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(4.0.h),
                     child: Row(
                       children: [
                         Image.asset(
                           "assets/smartphone.png",
-                          width: 50,
+                          width: 50.w,
                           color: Colors.blue,
                         ),
-                        const SizedBox(
-                          width: 5,
+                        SizedBox(
+                          width: 5.w,
                         ),
                         Text(
                           "Add more phones",
                           style: GoogleFonts.josefinSans(fontSize: 28),
                         ),
-                        const SizedBox(
-                          width: 5,
+                        SizedBox(
+                          width: 5.w,
                         ),
                       ],
                     ),
@@ -308,29 +308,29 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: const Color.fromARGB(255, 72, 80, 74),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: EdgeInsets.all(4.0.h),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 5,
+                      SizedBox(
+                        width: 5.w,
                       ),
                       Image.asset(
                         "assets/l.png",
-                        width: 20,
+                        width: 20.w,
                       ),
-                      const SizedBox(
-                        width: 5,
+                      SizedBox(
+                        width: 5.w,
                       ),
                       Text(
                         widget.gameID,
-                        style: GoogleFonts.josefinSans(fontSize: 30),
+                        style: GoogleFonts.josefinSans(fontSize: 30.sp),
                       ),
                     ],
                   ),
@@ -342,7 +342,7 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
         backgroundColor: Colors.blue,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0.h),
             child: Center(
                 child: FittedBox(
               child: Column(
@@ -352,15 +352,15 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                     playerName: playerName1,
                     color: const Color.fromARGB(255, 10, 25, 161),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   PlayerColorInfo(
                     playerName: playerName2,
                     color: Colors.orange,
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Container(
                     color: Colors.black,
@@ -378,20 +378,20 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   right: cells[index].right
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
+                                      ? BorderSide(
+                                          color: Colors.white, width: 1.w)
                                       : BorderSide.none,
                                   bottom: cells[index].bottom
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
+                                      ? BorderSide(
+                                          color: Colors.white, width: 1.w)
                                       : BorderSide.none,
                                   left: cells[index].left
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
+                                      ? BorderSide(
+                                          color: Colors.white, width: 1.w)
                                       : BorderSide.none,
                                   top: cells[index].top
-                                      ? const BorderSide(
-                                          color: Colors.white, width: 1)
+                                      ? BorderSide(
+                                          color: Colors.white, width: 1.w)
                                       : BorderSide.none,
                                 ),
                                 // image: DecorationImage(image: AssetImage("assets/runner.png")),
@@ -401,26 +401,31 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                                     : (index == _currentStepOfPlayer2 &&
                                             _isCompleted)
                                         ? Colors.orange
-                                        : Colors.transparent,
+                                        :(index == 0 ||
+                                              index == getIndex(0, row - 1))
+                                          ? const Color.fromARGB(
+                                              255, 167, 150, 150)
+                                          : Colors.transparent,
                                 // : cells[index].visited
                                 //     ? Colors.purple.withOpacity(0.5)
                                 // : Colors.transparent,
                               ),
-                              padding: const EdgeInsets.all(2),
+                              padding: EdgeInsets.all(2.h),
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: index == 0
-                                    ? const Text(
+                                    ? Text(
                                         'Start',
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
+                                            color: Colors.white,
+                                            fontSize: 18.sp),
                                       )
                                     : index == getIndex(0, row - 1)
-                                        ? const Text(
+                                        ? Text(
                                             'End',
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 18),
+                                                fontSize: 18.sp),
                                           )
                                         : null,
                               )),
@@ -428,8 +433,8 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 15.h,
                   ),
                   Text(
                     _isWin
@@ -439,10 +444,10 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
-                    style: const TextStyle(color: Colors.white, fontSize: 22),
+                    style: TextStyle(color: Colors.white, fontSize: 22.sp),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 15.h,
                   ),
                   _isWin
                       ? MaterialButton(
@@ -453,10 +458,10 @@ class _TwoPlayerMazeState extends State<TwoPlayerMaze> {
                               reset();
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Generate Another Maze',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 20.sp),
                           ),
                         )
                       : _isCompleted

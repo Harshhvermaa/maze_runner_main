@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 class PlayerColorInfo extends StatelessWidget {
   const PlayerColorInfo(
       {Key? key, required this.playerName, required this.color})
@@ -23,18 +25,12 @@ class PlayerColorInfo extends StatelessWidget {
             children: [
               Text(
                 playerName,
-                style: const TextStyle(
+                style: GoogleFonts.josefinSans(
                   color: Colors.white,
                   fontSize: 30,
                 ),
               ),
-              Container(
-                  // decoration: BoxDecoration(
-                  //   // border: Border.all(color: Colors.black, width: 1),
-                  // ),
-                  height: 30,
-                  width: 30,
-                  color: color),
+              Container(height: 30, width: 30, color: color),
             ],
           ),
         ),

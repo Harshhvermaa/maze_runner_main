@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/keyboard.dart';
@@ -22,57 +23,61 @@ class _FrontScreenState extends State<FrontScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18),
+            padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
             child: Container(
-              height: 70,
+              height: 87.h,
               width: screenWidth,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 0, 0, 0),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 border: Border.all(
-                  width: 2,
+                  width: 2.w,
                   color: Colors.blue,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: Center(
-                  child: TextField(
-                    // maxLength: 6,
-                    controller: _nickname,
-                    cursorHeight: 40,
-                    style: GoogleFonts.josefinSans(
-                      fontSize: 40,
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                    ),
-                    decoration: InputDecoration(
-                        hintText: "Nickname",
-                        hintStyle: GoogleFonts.josefinSans(
-                            color: Colors.white.withOpacity(0.2),
-                            fontSize: 40,
-                            fontWeight: FontWeight.w600),
-                        contentPadding: const EdgeInsets.only(),
-                        border: InputBorder.none),
+              child: Center(
+                child: TextField(
+                  // maxLength: 6,
+                  controller: _nickname,
+                  cursorHeight: 40.h,
+                  style: GoogleFonts.josefinSans(
+                    fontSize: 40.sp,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
                   ),
+                  maxLength: 8,
+                  decoration: InputDecoration(
+                      
+                      hintText: "Nickname",
+                      hintStyle: GoogleFonts.josefinSans(
+                          color: Colors.white.withOpacity(0.2),
+                          fontSize: 40.sp,
+                          fontWeight: FontWeight.w600),
+                      contentPadding: EdgeInsets.only(
+                        top: 20.h,
+                        left: 18.w,
+                        // bottom: 20.h,
+                      ),
+                      border: InputBorder.none),
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: 40.h,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18),
+            padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
             child: Container(
-                height: 70,
+                height: 70.h,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 0, 0, 0),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: ElevatedButton(
                   onPressed: () {
+                    FocusScope.of(context).unfocus();
                     _nickname.text.length > 3
                         ? Navigator.push(
                             context,
@@ -84,12 +89,12 @@ class _FrontScreenState extends State<FrontScreen> {
                   },
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(12.0.r),
                     // side: BorderSide(color: Colors.red)
                   ))),
                   child: Text(
                     "Submit",
-                    style: GoogleFonts.josefinSans(fontSize: 25),
+                    style: GoogleFonts.josefinSans(fontSize: 25.sp),
                   ),
                 )),
           ),

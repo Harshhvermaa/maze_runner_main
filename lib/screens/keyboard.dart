@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,23 +37,29 @@ class _KeyboardState extends State<Keyboard> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 42, 42, 42),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.transparent,
-              ),
-              child: const Image(
-                image: AssetImage("assets/man.png"),
-                height: 120,
-                width: 120,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 1),
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                      blurRadius: 8.0.r,
+                    ),
+                  ]),
+              child: Image(
+                image: const AssetImage("assets/man1.png"),
+                height: 120.h,
+                width: 120.w,
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 20.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,49 +68,49 @@ class _KeyboardState extends State<Keyboard> {
                   "Hello ",
                   style: GoogleFonts.josefinSans(
                       color: Colors.green,
-                      fontSize: 30,
+                      fontSize: 30.sp,
                       fontWeight: FontWeight.w600),
                 ),
                 Text(
                   widget.nickname,
                   style: GoogleFonts.josefinSans(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 30.sp,
                       fontWeight: FontWeight.w600),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: 50.h,
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 10.h,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 24),
+              padding: EdgeInsets.only(left: 20.0.w, right: 24.w),
               child: Container(
-                height: 70,
+                height: 70.h,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 0, 0, 0),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.sp),
                   border: Border.all(
-                    width: 2,
+                    width: 2.w,
                     color: Colors.blue,
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: EdgeInsets.symmetric(horizontal: 18.0.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Image(
-                        image: AssetImage("assets/l.png"),
-                        height: 30,
-                        width: 30,
+                      Image(
+                        image: const AssetImage("assets/l.png"),
+                        height: 30.h,
+                        width: 30.w,
                       ),
-                      const SizedBox(
-                        width: 20,
+                      SizedBox(
+                        width: 20.w,
                       ),
                       Expanded(
                         child: Center(
@@ -112,18 +119,17 @@ class _KeyboardState extends State<Keyboard> {
                             keyboardType: TextInputType.none,
                             maxLength: 6,
                             controller: _text,
-                            cursorHeight: 40,
+                            cursorHeight: 40.h,
                             style: GoogleFonts.josefinSans(
-                                fontSize: 40, color: Colors.white),
+                                fontSize: 40.sp, color: Colors.white),
                             decoration: InputDecoration(
                                 hintText: "Code",
                                 alignLabelWithHint: true,
                                 hintStyle: GoogleFonts.josefinSans(
                                     color: Colors.white.withOpacity(0.2),
-                                    fontSize: 40,
+                                    fontSize: 40.sp,
                                     fontWeight: FontWeight.w600),
-                                contentPadding:
-                                    const EdgeInsets.only(bottom: -20),
+                                contentPadding: EdgeInsets.only(bottom: -20.h),
                                 border: InputBorder.none),
                           ),
                         ),
@@ -133,11 +139,10 @@ class _KeyboardState extends State<Keyboard> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 30.h,
             ),
             SizedBox(
-                // height: 550,
                 width: screenWidth,
                 child: StaggeredGrid.count(
                     crossAxisCount: 3,
@@ -228,10 +233,10 @@ class _KeyboardState extends State<Keyboard> {
 
   Widget numberContainer(int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: EdgeInsets.only(bottom: 8.0.h),
       child: Container(
-        height: 80,
-        width: 80,
+        height: 80.h,
+        width: 80.w,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: const Color.fromARGB(255, 31, 31, 31),
@@ -239,7 +244,7 @@ class _KeyboardState extends State<Keyboard> {
               BoxShadow(
                 offset: const Offset(0, 4),
                 color: Colors.blueAccent.withOpacity(0.5),
-                blurRadius: 8.0,
+                blurRadius: 8.0.r,
               ),
             ]),
         child: Center(
@@ -248,29 +253,29 @@ class _KeyboardState extends State<Keyboard> {
                   "${index + 1}".toString(),
                   style: GoogleFonts.josefinSans(
                       // fontWeight: FontWeight.w600,
-                      fontSize: 30,
+                      fontSize: 30.sp,
                       color: Colors.white),
                 )
               : index == 11
-                  ? const Image(
-                      image: AssetImage("assets/check.png"),
+                  ? Image(
+                      image: const AssetImage("assets/check.png"),
                       color: Colors.greenAccent,
-                      height: 30,
-                      width: 30,
+                      height: 30.h,
+                      width: 30.w,
                     )
                   : index == 10
                       ? Text(
                           "0".toString(),
-                          style: const TextStyle(
+                          style: TextStyle(
                               // fontWeight: FontWeight.w600,
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               color: Colors.white),
                         )
-                      : const Image(
-                          image: AssetImage("assets/close.png"),
+                      : Image(
+                          image: const AssetImage("assets/close.png"),
                           color: Colors.redAccent,
-                          height: 30,
-                          width: 20,
+                          height: 30.h,
+                          width: 20.w,
                         ),
         ),
       ),

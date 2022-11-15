@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/web_first_screen.dart';
 
@@ -216,31 +217,30 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                         WebFirstScreen(gameID: int.parse(widget.gameID))));
               },
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     color: const Color.fromARGB(255, 72, 80, 74),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(4.0.h),
                     child: Row(
                       children: [
                         Image.asset(
                           "assets/smartphone.png",
-                          width: 50,
+                          width: 50.w,
                           color: Colors.blue,
                         ),
-                        const SizedBox(
-                          width: 5,
+                        SizedBox(
+                          width: 5.w,
                         ),
                         Text(
                           "Add more phones",
-                          style: GoogleFonts.josefinSans(fontSize: 28),
+                          style: GoogleFonts.josefinSans(fontSize: 28.sp),
                         ),
-                        const SizedBox(
-                          width: 5,
+                        SizedBox(
+                          width: 5.w,
                         ),
                       ],
                     ),
@@ -249,29 +249,29 @@ class _MazeGeneratorState extends State<MazeGenerator> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: const Color.fromARGB(255, 72, 80, 74),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: EdgeInsets.all(4.0.h),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 5,
+                      SizedBox(
+                        width: 5.w,
                       ),
                       Image.asset(
                         "assets/l.png",
                         width: 20,
                       ),
-                      const SizedBox(
-                        width: 5,
+                      SizedBox(
+                        width: 5.w,
                       ),
                       Text(
                         widget.gameID,
-                        style: GoogleFonts.josefinSans(fontSize: 30),
+                        style: GoogleFonts.josefinSans(fontSize: 30.sp),
                       ),
                     ],
                   ),
@@ -284,36 +284,14 @@ class _MazeGeneratorState extends State<MazeGenerator> {
         body: Container(
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(15.0.h),
               child: Center(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  //   Text(
-                  //     playerName,
-                  //     style: const TextStyle(
-                  //       color: Colors.white,
-                  //       fontSize: 30,
-                  //     ),
-                  //   ),
-                  //   const SizedBox(
-                  //     width: 20,
-                  //   ),
-                  //   Container(
-                  //       // decoration: BoxDecoration(
-                  //       //   // border: Border.all(color: Colors.black, width: 1),
-                  //       // ),
-                  //       height: 30,
-                  //       width: 30,
-                  //       color: const Color.fromARGB(255, 47, 0, 122)),
-                  // ]),
-                  // const SizedBox(
-                  //   height: 30,
-                  // ),
                   Container(
                     child: Container(
-                      margin: const EdgeInsets.only(right: 30),
+                      margin: EdgeInsets.only(right: 30.w),
                       color: const Color.fromARGB(255, 0, 0, 0),
                       height: height,
                       width: width,
@@ -329,20 +307,20 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                                 decoration: BoxDecoration(
                                   border: Border(
                                     right: cells[index].right
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
+                                        ? BorderSide(
+                                            color: Colors.white, width: 1.w)
                                         : BorderSide.none,
                                     bottom: cells[index].bottom
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
+                                        ? BorderSide(
+                                            color: Colors.white, width: 1.w)
                                         : BorderSide.none,
                                     left: cells[index].left
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
+                                        ? BorderSide(
+                                            color: Colors.white, width: 1.w)
                                         : BorderSide.none,
                                     top: cells[index].top
-                                        ? const BorderSide(
-                                            color: Colors.white, width: 1)
+                                        ? BorderSide(
+                                            color: Colors.white, width: 1.w)
                                         : BorderSide.none,
                                   ),
                                   // image: DecorationImage(image: AssetImage("assets/runner.png")),
@@ -350,24 +328,32 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                                       ? const Color.fromARGB(255, 47, 0, 122)
                                       // : cells[index].visited
                                       //     ? Colors.purple.withOpacity(0.5)
-                                      : Colors.transparent,
+                                      : (index == 0 ||
+                                              index == getIndex(0, row - 1))
+                                          ? const Color.fromARGB(
+                                              255, 167, 150, 150)
+                                          : Colors.transparent,
                                 ),
-                                padding: const EdgeInsets.all(2),
+                                padding: EdgeInsets.all(2.h),
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: index == 0
-                                      ? const Text(
+                                      ? Text(
                                           'Start',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
+                                          style: GoogleFonts.josefinSans(
+                                            color: Colors.green,
+                                            fontSize: 25.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         )
                                       : index == getIndex(0, row - 1)
-                                          ? const Text(
+                                          ? Text(
                                               'End',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18),
+                                              style: GoogleFonts.josefinSans(
+                                                color: Colors.red,
+                                                fontSize: 25.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             )
                                           : null,
                                 )),
@@ -376,8 +362,8 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 15.h,
                   ),
                   Text(
                     _isWin
@@ -385,10 +371,10 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
-                    style: const TextStyle(color: Colors.white, fontSize: 22),
+                    style: TextStyle(color: Colors.white, fontSize: 22.sp),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 15.h,
                   ),
                   _isWin
                       ? MaterialButton(
@@ -399,10 +385,10 @@ class _MazeGeneratorState extends State<MazeGenerator> {
                               reset();
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Generate Another Maze',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 20.sp),
                           ),
                         )
                       : _isCompleted

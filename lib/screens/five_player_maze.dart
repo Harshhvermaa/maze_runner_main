@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/web_first_screen.dart';
 import 'package:maze_runner/widgets/player_color_info.dart';
@@ -440,7 +441,7 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
           automaticallyImplyLeading: false,
           title: Text(
             "Five Player Maze runner",
-            style: GoogleFonts.josefinSans(fontSize: 30),
+            style: GoogleFonts.josefinSans(fontSize: 30.sp),
           ),
           centerTitle: true,
           backgroundColor: Colors.black,
@@ -457,30 +458,30 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
               },
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                     EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     color: const Color.fromARGB(255, 72, 80, 74),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding:  EdgeInsets.all(4.0.h),
                     child: Row(
                       children: [
                         Image.asset(
                           "assets/smartphone.png",
-                          width: 50,
+                          width: 50.w,
                           color: Colors.blue,
                         ),
-                        const SizedBox(
-                          width: 5,
+                         SizedBox(
+                          width: 5.w,
                         ),
                         Text(
                           "Add more phones",
-                          style: GoogleFonts.josefinSans(fontSize: 28),
+                          style: GoogleFonts.josefinSans(fontSize: 28.sp),
                         ),
-                        const SizedBox(
-                          width: 5,
+                         SizedBox(
+                          width: 5.w,
                         ),
                       ],
                     ),
@@ -489,29 +490,29 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              padding:  EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.w),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: const Color.fromARGB(255, 72, 80, 74),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 5,
+                       SizedBox(
+                        width: 5.w,
                       ),
                       Image.asset(
                         "assets/l.png",
-                        width: 20,
+                        width: 20.w,
                       ),
-                      const SizedBox(
-                        width: 5,
+                       SizedBox(
+                        width: 5.w,
                       ),
                       Text(
                         widget.gameID,
-                        style: GoogleFonts.josefinSans(fontSize: 30),
+                        style: GoogleFonts.josefinSans(fontSize: 30.sp),
                       ),
                     ],
                   ),
@@ -538,20 +539,20 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                             playerName: playerName1,
                             color: const Color.fromARGB(255, 10, 25, 161),
                           ),
-                          const SizedBox(
-                            height: 30,
+                           SizedBox(
+                            height: 30.h,
                           ),
                           PlayerColorInfo(
                             playerName: playerName2,
                             color: Colors.orange,
                           ),
-                          const SizedBox(
-                            height: 30,
+                           SizedBox(
+                            height: 30.h,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        width: 30,
+                       SizedBox(
+                        width: 30.w,
                       ),
                       Column(
                         children: [
@@ -559,23 +560,23 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                             playerName: playerName3,
                             color: Colors.green,
                           ),
-                          const SizedBox(
-                            height: 30,
+                           SizedBox(
+                            height: 30.h,
                           ),
                           PlayerColorInfo(
                               playerName: playerName4, color: Colors.pink),
-                          const SizedBox(
-                            height: 30,
+                           SizedBox(
+                            height: 30.h,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        width: 30,
+                       SizedBox(
+                        width: 30.w,
                       ),
                       PlayerColorInfo(
                           playerName: playerName5, color: Colors.brown),
-                      const SizedBox(
-                        height: 30,
+                       SizedBox(
+                        height: 30.h,
                       ),
                     ],
                   ),
@@ -595,20 +596,20 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                             decoration: BoxDecoration(
                               border: Border(
                                 right: cells[index].right
-                                    ? const BorderSide(
-                                        color: Colors.white, width: 1)
+                                    ?  BorderSide(
+                                        color: Colors.white, width: 1.w)
                                     : BorderSide.none,
                                 bottom: cells[index].bottom
-                                    ? const BorderSide(
-                                        color: Colors.white, width: 1)
+                                    ?  BorderSide(
+                                        color: Colors.white, width: 1.w)
                                     : BorderSide.none,
                                 left: cells[index].left
-                                    ? const BorderSide(
-                                        color: Colors.white, width: 1)
+                                    ?  BorderSide(
+                                        color: Colors.white, width: 1.w)
                                     : BorderSide.none,
                                 top: cells[index].top
-                                    ? const BorderSide(
-                                        color: Colors.white, width: 1)
+                                    ?  BorderSide(
+                                        color: Colors.white, width: 1.w)
                                     : BorderSide.none,
                               ),
                               // image: DecorationImage(image: AssetImage("assets/runner.png")),
@@ -627,7 +628,11 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                                               : (index == _currentStepOfPlayer5 &&
                                                       _isCompleted)
                                                   ? Colors.brown
-                                                  : Colors.transparent,
+                                                  : (index == 0 ||
+                                              index == getIndex(0, row - 1))
+                                          ? const Color.fromARGB(
+                                              255, 167, 150, 150)
+                                          : Colors.transparent,
                               // : cells[index].visited
                               //     ? Colors.purple.withOpacity(0.5)
                               // : Colors.transparent,
@@ -636,17 +641,17 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: index == 0
-                                  ? const Text(
+                                  ?  Text(
                                       'Start',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
+                                          color: Colors.white, fontSize: 18.sp),
                                     )
                                   : index == getIndex(0, row - 1)
-                                      ? const Text(
+                                      ?  Text(
                                           'End',
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 18),
+                                              fontSize: 18.sp),
                                         )
                                       : null,
                             ),
@@ -655,8 +660,8 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
+                   SizedBox(
+                    height: 15.h,
                   ),
                   Text(
                     _isWin
@@ -674,10 +679,10 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                         : _isCompleted
                             ? 'Maze Generation Completed'
                             : 'Generating Maze...',
-                    style: const TextStyle(color: Colors.white, fontSize: 22),
+                    style:  TextStyle(color: Colors.white, fontSize: 22.sp),
                   ),
-                  const SizedBox(
-                    height: 15,
+                   SizedBox(
+                    height: 15.h,
                   ),
                   _isWin
                       ? MaterialButton(
@@ -688,10 +693,10 @@ class _FivePlayerMazeState extends State<FivePlayerMaze> {
                               reset();
                             });
                           },
-                          child: const Text(
+                          child:  Text(
                             'Generate Another Maze',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 20.sp),
                           ),
                         )
                       : _isCompleted

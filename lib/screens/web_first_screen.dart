@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/five_player_maze.dart';
 import 'package:maze_runner/screens/four_player_maze.dart';
@@ -30,7 +30,6 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
     super.initState();
 
     if (widget.gameID == null) {
-      Fluttertoast.showToast(msg: "gameid ${widget.gameID}");
       id = 100000 + Random().nextInt(899999);
       ref.child(id.toString()).set("");
       ref.child(id.toString()).onValue.listen((event) {
@@ -73,34 +72,34 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           "Maze runner",
-          style: GoogleFonts.josefinSans(fontSize: 30),
+          style: GoogleFonts.josefinSans(fontSize: 30.sp),
         ),
         backgroundColor: Colors.black,
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 8.h),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 color: const Color.fromARGB(255, 72, 80, 74),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: EdgeInsets.all(4.0.h),
                 child: Row(
                   children: [
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 5.w,
                     ),
                     Image.asset(
                       "assets/l.png",
-                      width: 20,
+                      width: 20.w,
                     ),
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 5.w,
                     ),
                     Text(
                       id.toString(),
-                      style: GoogleFonts.josefinSans(fontSize: 30),
+                      style: GoogleFonts.josefinSans(fontSize: 30.sp),
                     ),
                   ],
                 ),
@@ -117,15 +116,15 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/maze.jpg", height: 400),
-                  const SizedBox(
-                    height: 100,
+                  Image.asset("assets/maze.jpg", height: 400.h),
+                  SizedBox(
+                    height: 100.h,
                   ),
                   Text(
                     "Phone + Screen = Console",
                     style: GoogleFonts.josefinSans(
                         color: Colors.white,
-                        fontSize: 27,
+                        fontSize: 27.sp,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -141,13 +140,13 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
                   Text(
                     "Connect your phone as a gamepads",
                     style: GoogleFonts.quicksand(
-                        fontSize: 35,
+                        fontSize: 35.sp,
                         color: Colors.white,
-                        letterSpacing: 1,
+                        letterSpacing: 1.w,
                         fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -155,23 +154,23 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
                       Text(
                         "Open ",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25, color: Colors.white),
+                            fontSize: 25.sp, color: Colors.white),
                       ),
                       Text(
                         " mazerunner.com",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25,
+                            fontSize: 25.sp,
                             color: const Color.fromARGB(255, 0, 255, 34)),
                       ),
                       Text(
                         " in your phone",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25, color: Colors.white),
+                            fontSize: 25.sp, color: Colors.white),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -179,45 +178,45 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
                       Text(
                         "and ",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25, color: Colors.white),
+                            fontSize: 25.sp, color: Colors.white),
                       ),
                       Text(
                         "enter the code",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25,
+                            fontSize: 25.sp,
                             color: const Color.fromARGB(255, 81, 255, 0)),
                       ),
                       Text(
                         " below",
                         style: GoogleFonts.josefinSans(
-                            fontSize: 25, color: Colors.white),
+                            fontSize: 25.sp, color: Colors.white),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       color: const Color.fromARGB(255, 72, 80, 74),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0.h),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
                             "assets/l.png",
-                            width: 20,
+                            width: 20.w,
                           ),
-                          const SizedBox(
-                            width: 10,
+                          SizedBox(
+                            width: 10.w,
                           ),
                           Text(
                             id.toString(),
                             style: GoogleFonts.josefinSans(
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               color: Colors.white,
                             ),
                           ),
@@ -225,12 +224,12 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Image.asset(
                     "assets/phone-in-hand.png",
-                    height: 300,
+                    height: 300.h,
                   )
                 ],
               ),
