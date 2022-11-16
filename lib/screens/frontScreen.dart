@@ -47,7 +47,6 @@ class _FrontScreenState extends State<FrontScreen> {
                   ),
                   maxLength: 8,
                   decoration: InputDecoration(
-                      
                       hintText: "Nickname",
                       hintStyle: GoogleFonts.josefinSans(
                           color: Colors.white.withOpacity(0.2),
@@ -83,7 +82,7 @@ class _FrontScreenState extends State<FrontScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Keyboard(
-                                      nickname: _nickname.text,
+                                      nickname: _nickname.text.trim(),
                                     )))
                         : Fluttertoast.showToast(msg: "Please write your name");
                   },

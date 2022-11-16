@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class MyController extends StatefulWidget {
@@ -75,20 +76,32 @@ class _MyControllerState extends State<MyController> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: const Text("Confirm"),
-                  content: const Text("Would you like to to go back"),
+                  title: Text(
+                    "Confirm",
+                    style: GoogleFonts.josefinSans(),
+                  ),
+                  content: Text(
+                    "Would you like to to go back",
+                    style: GoogleFonts.josefinSans(),
+                  ),
                   actions: [
                     TextButton(
                         onPressed: () {
                           Navigator.of(context).pop(false);
                         },
-                        child: const Text("No")),
+                        child: Text(
+                          "No",
+                          style: GoogleFonts.josefinSans(),
+                        )),
                     TextButton(
                         onPressed: () async {
                           // await ref.child("${widget.gameID}/$player").remove();
                           Navigator.of(context).pop(true);
                         },
-                        child: const Text("Yes")),
+                        child: Text(
+                          "Yes",
+                          style: GoogleFonts.josefinSans(),
+                        )),
                   ],
                 );
               });

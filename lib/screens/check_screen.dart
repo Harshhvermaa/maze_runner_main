@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_runner/screens/frontScreen.dart';
@@ -9,13 +10,15 @@ class CheckScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MediaQuery.of(context).size.width > 500
+      body: MediaQuery.of(context).size.width > 900
           ? ScreenUtilInit(
-              builder: (_, child) => const WebFirstScreen(),
+              builder: (_, child) =>
+                  kIsWeb ? const WebFirstScreen() : const SizedBox(),
               designSize: const Size(1440, 1024),
             )
           : ScreenUtilInit(
-              builder: (_, child) => const FrontScreen(),
+              builder: (_, child) =>
+                  !kIsWeb ? const FrontScreen() : const SizedBox(),
               designSize: const Size(414, 896),
             ),
     );

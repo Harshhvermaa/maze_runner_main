@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maze_runner/screens/five_player_maze.dart';
 import 'package:maze_runner/screens/four_player_maze.dart';
+import 'package:maze_runner/screens/maze_ads.dart';
 
-import 'package:maze_runner/screens/maze_generator.dart';
 import 'package:maze_runner/screens/six_player_maze.dart';
 import 'package:maze_runner/screens/three_player_maze.dart';
 import 'package:maze_runner/screens/two_player_maze.dart';
@@ -39,7 +39,7 @@ class _WebFirstScreenState extends State<WebFirstScreen> {
           if ((noOfPlayers < noOfNodes)) {
             if (noOfNodes == 1) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MazeGenerator(id.toString())));
+                  builder: (context) => MazeAds(id.toString())));
             } else if (noOfNodes == 2) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TwoPlayerMaze(id.toString())));
