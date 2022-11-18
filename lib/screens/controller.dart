@@ -112,8 +112,8 @@ class _MyControllerState extends State<MyController> {
           children: [
             Center(
               child: SizedBox(
-                height: 250.h,
-                width: 250.w,
+                height: 200.h,
+                width: 200.w,
                 child: JoystickArea(
                   // onStickDragStart: (){
                   //

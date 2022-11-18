@@ -53,6 +53,7 @@ dependencies:
   flutter_screenutil: ^5.6.0
   google_mobile_ads: ^2.2.0
   webviewx: ^0.2.1
+  animated_button: ^0.2.0
 
 dev_dependencies:
   flutter_test:

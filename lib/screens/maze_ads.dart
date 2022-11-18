@@ -386,12 +386,13 @@ class _MazeAdsState extends State<MazeAds> {
                       ),
                       WebViewX(
                         initialContent:
-                            '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Hello GPT</title> <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script> <script> window.googletag = window.googletag || {cmd: []}; googletag.cmd.push(function() { googletag .defineSlot( \'/6355419/Travel/Europe/France/Paris\', [300, 250], \'banner-ad\') .addService(googletag.pubads()); googletag.enableServices(); }); </script> </head> <body> <div id="banner-ad" style="width: 300px; height: 250px;"> <h1>Adsense ads</h1> <script> googletag.cmd.push(function() { googletag.display(\'banner-ad\'); }); </script> </div> </body> </html>',
+                            '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9037691260181761" crossorigin="anonymous"></script> <!-- phone --> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9037691260181761" data-ad-slot="9308508297" data-ad-format="auto" data-full-width-responsive="true"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>',
                         initialSourceType: SourceType.html,
                         onWebViewCreated: (controller) =>
                             webviewController = controller,
                         width: 320,
                         height: 300,
+
                       ),
                     ],
                   ),

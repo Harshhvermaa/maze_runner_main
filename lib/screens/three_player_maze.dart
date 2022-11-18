@@ -396,7 +396,23 @@ class _ThreePlayerMazeState extends State<ThreePlayerMaze> {
                   ),
                 ),
               ),
-            )
+            ),
+            Padding(
+            padding: EdgeInsets.only(right: 50.w, top: 10.h, bottom: 10.h),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                color: const Color.fromARGB(255, 72, 80, 74),
+              ),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const WebFirstScreen()));
+                },
+                icon: const Icon(Icons.replay_outlined),
+              ),
+            ),
+          ),
           ],
         ),
         backgroundColor: Colors.blue,
